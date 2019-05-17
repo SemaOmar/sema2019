@@ -1,0 +1,42 @@
+never spec1 {    /* !([] ((! (presencia)) || (<> ((state_luz==on))))) */
+T0_init:
+	do
+	:: (! ((! (presencia))) && ! (((state_luz==on)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state_luz==on)))) -> goto accept_S4
+	od;
+}
+never spec2 {    /* !([] ((! (((state_luz==off)) && (boton))) || (<> ((state_luz==on))))) */
+T0_init:
+	do
+	:: (! ((! (((state_luz==off)) && (boton)))) && ! (((state_luz==on)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state_luz==on)))) -> goto accept_S4
+	od;
+}
+never spec3 {    /* !([] ((! (((state_luz==on)) && (boton))) || (<> ((state_luz==on))))) */
+T0_init:
+	do
+	:: (! ((! (((state_luz==on)) && (boton)))) && ! (((state_luz==on)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state_luz==on)))) -> goto accept_S4
+	od;
+}
+never spec4 {    /* !([] ((!(((state_luz==on)&&((!(presencia)||boton)||timer)))|334))) */
+T0_init:
+	do
+	:: atomic { (! (((!(((state_luz==on)&&((!(presencia)||boton)||timer)))|334)))) -> assert(!(! (((!(((state_luz==on)&&((!(presencia)||boton)||timer)))|334))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
