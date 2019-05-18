@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm pan* *tmp *il &> /dev/null
+spin -a codigo.pml
+gcc -o pan pan.c

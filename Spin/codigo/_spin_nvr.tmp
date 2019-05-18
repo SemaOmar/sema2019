@@ -1,0 +1,45 @@
+never spec1 {    /* !([] ((!(((state==OFF)&&pulsacion))|334))) */
+T0_init:
+	do
+	:: atomic { (! (((!(((state==OFF)&&pulsacion))|334)))) -> assert(!(! (((!(((state==OFF)&&pulsacion))|334))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never spec2 {    /* !([] ((!(((state==DIG1)&&time_out))|334))) */
+T0_init:
+	do
+	:: atomic { (! (((!(((state==DIG1)&&time_out))|334)))) -> assert(!(! (((!(((state==DIG1)&&time_out))|334))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never spec3 {    /* !([] ((!(((state==DIG2)&&time_out))|334))) */
+T0_init:
+	do
+	:: atomic { (! (((!(((state==DIG2)&&time_out))|334)))) -> assert(!(! (((!(((state==DIG2)&&time_out))|334))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never spec4 {    /* !([] ((!(((state==DIG3)&&time_out))|334))) */
+T0_init:
+	do
+	:: atomic { (! (((!(((state==DIG3)&&time_out))|334)))) -> assert(!(! (((!(((state==DIG3)&&time_out))|334))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never spec5 {    /* !([] ((!(((state==DIG3)&&numero_correcto))|334))) */
+T0_init:
+	do
+	:: atomic { (! (((!(((state==DIG3)&&numero_correcto))|334)))) -> assert(!(! (((!(((state==DIG3)&&numero_correcto))|334))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
