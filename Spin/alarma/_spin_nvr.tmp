@@ -1,0 +1,49 @@
+never spec1 {    /* !([] ((! ((((state_alarma==ON)) && (presencia)) && (([] (! (codigo))) || ((! (codigo)) U ((alerta==1)))))) || (<> ((alerta==1))))) */
+T0_init:
+	do
+	:: ((! (codigo)) && ! (((alerta==1))) && (((state_alarma==ON)) && (presencia))) -> goto accept_S7
+	:: ((! (codigo)) && ! (((alerta==1))) && (((state_alarma==ON)) && (presencia))) -> goto T0_S27
+	:: (1) -> goto T0_init
+	od;
+accept_S7:
+	do
+	:: ((! (codigo)) && ! (((alerta==1)))) -> goto accept_S7
+	od;
+T0_S27:
+	do
+	:: ((! (codigo)) && ! (((alerta==1)))) -> goto T0_S27
+	od;
+}
+never spec2 {    /* !([] ((! ((((state_alarma==ON)) && (codigo)) && (alerta))) || (<> ((alerta==0))))) */
+T0_init:
+	do
+	:: (! ((! ((((state_alarma==ON)) && (codigo)) && (alerta)))) && ! (((alerta==0)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((alerta==0)))) -> goto accept_S4
+	od;
+}
+never spec3 {    /* !([] ((! ((((state_alarma==ON)) && (codigo)) && (! (alerta)))) || (<> ((state_alarma==OFF))))) */
+T0_init:
+	do
+	:: (! ((! ((((state_alarma==ON)) && (codigo)) && (! (alerta))))) && ! (((state_alarma==OFF)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state_alarma==OFF)))) -> goto accept_S4
+	od;
+}
+never spec4 {    /* !([] ((! (((state_alarma==OFF)) && (codigo))) || (<> ((state_alarma==ON))))) */
+T0_init:
+	do
+	:: (! ((! (((state_alarma==OFF)) && (codigo)))) && ! (((state_alarma==ON)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((state_alarma==ON)))) -> goto accept_S4
+	od;
+}
