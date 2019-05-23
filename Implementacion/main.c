@@ -23,11 +23,8 @@ enum light_state { LIGHT_ON, LIGHT_OFF};
 enum alarm_state { ALARM_ON, ALARM_OFF};
 
 static int flags = 0;
-static void button_isr (void) { button = 1; }
 static int button_pressed (fsm_t* this) { return button; }
 
-static int timer = 0;
-static void timer_isr (union sigval arg) { timer = 1; }
 static struct timeval timer_endtime;
 
 static void encender_luz (fsm_t* this)
@@ -117,15 +114,6 @@ int main ()
   struct timeval clk_period = { 0, 250 * 1000 };
   struct timeval next_activation;
   fsm_t* cofm_fsm = fsm_new (cofm);
-
-  wiringPiSetup();
-  pinMode (GPIO_BUTTON, INPUT);
-  wiringPiISR (GPIO_BUTTON, INT_EDGE_FALLING, button_isr);
-  pinMode (GPIO_CUP, OUTPUT);
-  pinMode (GPIO_COFFEE, OUTPUT);
-  pinMode (GPIO_MILK, OUTPUT);
-  pinMode (GPIO_LED, OUTPUT);
-  digitalWrite (GPIO_LED, HIGH);
   
   gettimeofday (&next_activation, NULL);
   while (scanf("%d %d", &button, &timer) == 2) {
