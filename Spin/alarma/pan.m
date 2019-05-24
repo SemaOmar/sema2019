@@ -20,7 +20,7 @@
 		_m = 3; goto P999;
 
 		 /* CLAIM spec4 */
-	case 3: // STATE 1 - _spin_nvr.tmp:41 - [((!(!(((state_alarma==OFF)&&codigo)))&&!((state_alarma==ON))))] (0:0:0 - 1)
+	case 3: // STATE 1 - _spin_nvr.tmp:41 - [((!(!(((state_alarma==OFF)&&codigo_ok)))&&!((state_alarma==ON))))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -42,8 +42,8 @@
 		}	}
 #endif
 #endif
-		reached[5][1] = 1;
-		if (!(( !( !(((now.state_alarma==1)&&((int)now.codigo))))&& !((now.state_alarma==2)))))
+		reached[7][1] = 1;
+		if (!(( !( !(((now.state_alarma==1)&&((int)now.codigo_ok))))&& !((now.state_alarma==2)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
 	case 4: // STATE 8 - _spin_nvr.tmp:46 - [(!((state_alarma==ON)))] (0:0:0 - 1)
@@ -68,7 +68,7 @@
 		}	}
 #endif
 #endif
-		reached[5][8] = 1;
+		reached[7][8] = 1;
 		if (!( !((now.state_alarma==2))))
 			continue;
 		_m = 3; goto P999; /* 0 */
@@ -94,12 +94,12 @@
 		}	}
 #endif
 #endif
-		reached[5][13] = 1;
+		reached[7][13] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* CLAIM spec3 */
-	case 6: // STATE 1 - _spin_nvr.tmp:30 - [((!(!((((state_alarma==ON)&&codigo)&&!(alerta))))&&!((state_alarma==OFF))))] (0:0:0 - 1)
+	case 6: // STATE 1 - _spin_nvr.tmp:30 - [((!(!((((state_alarma==ON)&&codigo_ok)&&!(alerta))))&&!((state_alarma==OFF))))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -121,8 +121,8 @@
 		}	}
 #endif
 #endif
-		reached[4][1] = 1;
-		if (!(( !( !((((now.state_alarma==2)&&((int)now.codigo))&& !(((int)now.alerta)))))&& !((now.state_alarma==1)))))
+		reached[6][1] = 1;
+		if (!(( !( !((((now.state_alarma==2)&&((int)now.codigo_ok))&& !(((int)now.alerta)))))&& !((now.state_alarma==1)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
 	case 7: // STATE 8 - _spin_nvr.tmp:35 - [(!((state_alarma==OFF)))] (0:0:0 - 1)
@@ -147,7 +147,7 @@
 		}	}
 #endif
 #endif
-		reached[4][8] = 1;
+		reached[6][8] = 1;
 		if (!( !((now.state_alarma==1))))
 			continue;
 		_m = 3; goto P999; /* 0 */
@@ -173,12 +173,12 @@
 		}	}
 #endif
 #endif
-		reached[4][13] = 1;
+		reached[6][13] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* CLAIM spec2 */
-	case 9: // STATE 1 - _spin_nvr.tmp:19 - [((!(!((((state_alarma==ON)&&codigo)&&alerta)))&&!((alerta==0))))] (0:0:0 - 1)
+	case 9: // STATE 1 - _spin_nvr.tmp:19 - [((!(!((((state_alarma==ON)&&codigo_ok)&&alerta)))&&!((alerta==0))))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -200,8 +200,8 @@
 		}	}
 #endif
 #endif
-		reached[3][1] = 1;
-		if (!(( !( !((((now.state_alarma==2)&&((int)now.codigo))&&((int)now.alerta))))&& !((((int)now.alerta)==0)))))
+		reached[5][1] = 1;
+		if (!(( !( !((((now.state_alarma==2)&&((int)now.codigo_ok))&&((int)now.alerta))))&& !((((int)now.alerta)==0)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
 	case 10: // STATE 8 - _spin_nvr.tmp:24 - [(!((alerta==0)))] (0:0:0 - 1)
@@ -226,7 +226,7 @@
 		}	}
 #endif
 #endif
-		reached[3][8] = 1;
+		reached[5][8] = 1;
 		if (!( !((((int)now.alerta)==0))))
 			continue;
 		_m = 3; goto P999; /* 0 */
@@ -252,12 +252,12 @@
 		}	}
 #endif
 #endif
-		reached[3][13] = 1;
+		reached[5][13] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* CLAIM spec1 */
-	case 12: // STATE 1 - _spin_nvr.tmp:3 - [(((!(codigo)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))] (0:0:0 - 1)
+	case 12: // STATE 1 - _spin_nvr.tmp:3 - [(((!(codigo_ok)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -279,11 +279,11 @@
 		}	}
 #endif
 #endif
-		reached[2][1] = 1;
-		if (!((( !(((int)now.codigo))&& !((((int)now.alerta)==1)))&&((now.state_alarma==2)&&((int)now.presencia)))))
+		reached[4][1] = 1;
+		if (!((( !(((int)now.codigo_ok))&& !((((int)now.alerta)==1)))&&((now.state_alarma==2)&&((int)now.presencia)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 13: // STATE 3 - _spin_nvr.tmp:4 - [(((!(codigo)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))] (0:0:0 - 1)
+	case 13: // STATE 3 - _spin_nvr.tmp:4 - [(((!(codigo_ok)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -305,11 +305,11 @@
 		}	}
 #endif
 #endif
-		reached[2][3] = 1;
-		if (!((( !(((int)now.codigo))&& !((((int)now.alerta)==1)))&&((now.state_alarma==2)&&((int)now.presencia)))))
+		reached[4][3] = 1;
+		if (!((( !(((int)now.codigo_ok))&& !((((int)now.alerta)==1)))&&((now.state_alarma==2)&&((int)now.presencia)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 14: // STATE 10 - _spin_nvr.tmp:9 - [((!(codigo)&&!((alerta==1))))] (0:0:0 - 1)
+	case 14: // STATE 10 - _spin_nvr.tmp:9 - [((!(codigo_ok)&&!((alerta==1))))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -331,11 +331,11 @@
 		}	}
 #endif
 #endif
-		reached[2][10] = 1;
-		if (!(( !(((int)now.codigo))&& !((((int)now.alerta)==1)))))
+		reached[4][10] = 1;
+		if (!(( !(((int)now.codigo_ok))&& !((((int)now.alerta)==1)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 15: // STATE 15 - _spin_nvr.tmp:13 - [((!(codigo)&&!((alerta==1))))] (0:0:0 - 1)
+	case 15: // STATE 15 - _spin_nvr.tmp:13 - [((!(codigo_ok)&&!((alerta==1))))] (0:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -357,8 +357,8 @@
 		}	}
 #endif
 #endif
-		reached[2][15] = 1;
-		if (!(( !(((int)now.codigo))&& !((((int)now.alerta)==1)))))
+		reached[4][15] = 1;
+		if (!(( !(((int)now.codigo_ok))&& !((((int)now.alerta)==1)))))
 			continue;
 		_m = 3; goto P999; /* 0 */
 	case 16: // STATE 20 - _spin_nvr.tmp:15 - [-end-] (0:0:0 - 1)
@@ -383,14 +383,14 @@
 		}	}
 #endif
 #endif
-		reached[2][20] = 1;
+		reached[4][20] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC Actions */
-	case 17: // STATE 1 - alarma.pml:34 - [presencia = 1] (0:0:1 - 1)
+	case 17: // STATE 1 - alarma.pml:55 - [presencia = 1] (0:0:1 - 1)
 		IfNotBlocked
-		reached[1][1] = 1;
+		reached[3][1] = 1;
 		(trpt+1)->bup.oval = ((int)now.presencia);
 		now.presencia = 1;
 #ifdef VAR_RANGES
@@ -398,29 +398,73 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 18: // STATE 2 - alarma.pml:35 - [codigo = 1] (0:0:1 - 1)
+	case 18: // STATE 5 - alarma.pml:58 - [printf('estado: %e , presencia: %d, codigo_ok: %d, alerta: %d  \\n',state_alarma,presencia,codigo_ok,alerta)] (0:0:0 - 3)
 		IfNotBlocked
-		reached[1][2] = 1;
-		(trpt+1)->bup.oval = ((int)now.codigo);
-		now.codigo = 1;
+		reached[3][5] = 1;
+		Printf("estado: %e , presencia: %d, codigo_ok: %d, alerta: %d  \n", now.state_alarma, ((int)now.presencia), ((int)now.codigo_ok), ((int)now.alerta));
+		_m = 3; goto P999; /* 0 */
+	case 19: // STATE 9 - alarma.pml:61 - [-end-] (0:0:0 - 1)
+		IfNotBlocked
+		reached[3][9] = 1;
+		if (!delproc(1, II)) continue;
+		_m = 3; goto P999; /* 0 */
+
+		 /* PROC fsm_codigo */
+	case 20: // STATE 1 - alarma.pml:47 - [codigo_ok = 1] (0:0:1 - 1)
+		IfNotBlocked
+		reached[2][1] = 1;
+		(trpt+1)->bup.oval = ((int)now.codigo_ok);
+		now.codigo_ok = 1;
 #ifdef VAR_RANGES
-		logval("codigo", ((int)now.codigo));
+		logval("codigo_ok", ((int)now.codigo_ok));
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 19: // STATE 6 - alarma.pml:38 - [printf('estado: %e , presencia: %d, codigo: %d, alerta: %d  \\n',state_alarma,presencia,codigo,alerta)] (0:0:0 - 4)
+	case 21: // STATE 2 - alarma.pml:47 - [printf('Codogo OK\\n')] (0:0:0 - 1)
 		IfNotBlocked
-		reached[1][6] = 1;
-		Printf("estado: %e , presencia: %d, codigo: %d, alerta: %d  \n", now.state_alarma, ((int)now.presencia), ((int)now.codigo), ((int)now.alerta));
+		reached[2][2] = 1;
+		Printf("Codogo OK\n");
 		_m = 3; goto P999; /* 0 */
-	case 20: // STATE 10 - alarma.pml:41 - [-end-] (0:0:0 - 1)
+	case 22: // STATE 3 - alarma.pml:48 - [codigo_ok = 0] (0:0:1 - 1)
 		IfNotBlocked
-		reached[1][10] = 1;
+		reached[2][3] = 1;
+		(trpt+1)->bup.oval = ((int)now.codigo_ok);
+		now.codigo_ok = 0;
+#ifdef VAR_RANGES
+		logval("codigo_ok", ((int)now.codigo_ok));
+#endif
+		;
+		_m = 3; goto P999; /* 0 */
+	case 23: // STATE 4 - alarma.pml:48 - [printf('Codigo ERROR\\n')] (0:0:0 - 1)
+		IfNotBlocked
+		reached[2][4] = 1;
+		Printf("Codigo ERROR\n");
+		_m = 3; goto P999; /* 0 */
+	case 24: // STATE 7 - alarma.pml:50 - [-end-] (0:0:0 - 3)
+		IfNotBlocked
+		reached[2][7] = 1;
+		if (!delproc(1, II)) continue;
+		_m = 3; goto P999; /* 0 */
+
+		 /* PROC fsm_luz */
+	case 25: // STATE 1 - alarma.pml:40 - [printf('Luz ON\\n')] (0:0:0 - 1)
+		IfNotBlocked
+		reached[1][1] = 1;
+		Printf("Luz ON\n");
+		_m = 3; goto P999; /* 0 */
+	case 26: // STATE 2 - alarma.pml:41 - [printf('Luz OFF\\n')] (0:0:0 - 1)
+		IfNotBlocked
+		reached[1][2] = 1;
+		Printf("Luz OFF\n");
+		_m = 3; goto P999; /* 0 */
+	case 27: // STATE 5 - alarma.pml:43 - [-end-] (0:0:0 - 3)
+		IfNotBlocked
+		reached[1][5] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC Alarma */
-	case 21: // STATE 1 - alarma.pml:13 - [state_alarma = OFF] (0:0:1 - 1)
+	case 28: // STATE 1 - alarma.pml:20 - [state_alarma = OFF] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][1] = 1;
 		(trpt+1)->bup.oval = now.state_alarma;
@@ -430,7 +474,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 22: // STATE 2 - alarma.pml:14 - [alerta = 0] (0:0:1 - 1)
+	case 29: // STATE 2 - alarma.pml:21 - [alerta = 0] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][2] = 1;
 		(trpt+1)->bup.oval = ((int)now.alerta);
@@ -440,16 +484,16 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 23: // STATE 3 - alarma.pml:16 - [((state_alarma==ON))] (0:0:0 - 1)
+	case 30: // STATE 3 - alarma.pml:23 - [((state_alarma==ON))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][3] = 1;
 		if (!((now.state_alarma==2)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 24: // STATE 4 - alarma.pml:18 - [((presencia&&!(codigo)))] (27:0:2 - 1)
+	case 31: // STATE 4 - alarma.pml:25 - [((presencia&&!(codigo_ok)))] (27:0:2 - 1)
 		IfNotBlocked
 		reached[0][4] = 1;
-		if (!((((int)now.presencia)&& !(((int)now.codigo)))))
+		if (!((((int)now.presencia)&& !(((int)now.codigo_ok)))))
 			continue;
 		/* merge: alerta = 1(27, 5, 27) */
 		reached[0][5] = 1;
@@ -478,7 +522,7 @@
 		reached[0][28] = 1;
 		;
 		_m = 3; goto P999; /* 5 */
-	case 25: // STATE 17 - alarma.pml:22 - [.(goto)] (0:27:0 - 3)
+	case 32: // STATE 17 - alarma.pml:29 - [.(goto)] (0:27:0 - 3)
 		IfNotBlocked
 		reached[0][17] = 1;
 		;
@@ -486,10 +530,10 @@
 		reached[0][28] = 1;
 		;
 		_m = 3; goto P999; /* 1 */
-	case 26: // STATE 8 - alarma.pml:19 - [((alerta&&codigo))] (27:0:2 - 1)
+	case 33: // STATE 8 - alarma.pml:26 - [((alerta&&codigo_ok))] (27:0:2 - 1)
 		IfNotBlocked
 		reached[0][8] = 1;
-		if (!((((int)now.alerta)&&((int)now.codigo))))
+		if (!((((int)now.alerta)&&((int)now.codigo_ok))))
 			continue;
 		/* merge: alerta = 0(27, 9, 27) */
 		reached[0][9] = 1;
@@ -503,12 +547,12 @@
 		/* merge: printf('Sirena desactivada \\n')(27, 10, 27) */
 		reached[0][10] = 1;
 		Printf("Sirena desactivada \n");
-		/* merge: codigo = 0(27, 11, 27) */
+		/* merge: codigo_ok = 0(27, 11, 27) */
 		reached[0][11] = 1;
-		(trpt+1)->bup.ovals[1] = ((int)now.codigo);
-		now.codigo = 0;
+		(trpt+1)->bup.ovals[1] = ((int)now.codigo_ok);
+		now.codigo_ok = 0;
 #ifdef VAR_RANGES
-		logval("codigo", ((int)now.codigo));
+		logval("codigo_ok", ((int)now.codigo_ok));
 #endif
 		;
 		/* merge: .(goto)(27, 17, 27) */
@@ -518,10 +562,10 @@
 		reached[0][28] = 1;
 		;
 		_m = 3; goto P999; /* 5 */
-	case 27: // STATE 12 - alarma.pml:20 - [((!(alerta)&&codigo))] (27:0:2 - 1)
+	case 34: // STATE 12 - alarma.pml:27 - [((!(alerta)&&codigo_ok))] (27:0:2 - 1)
 		IfNotBlocked
 		reached[0][12] = 1;
-		if (!(( !(((int)now.alerta))&&((int)now.codigo))))
+		if (!(( !(((int)now.alerta))&&((int)now.codigo_ok))))
 			continue;
 		/* merge: state_alarma = OFF(27, 13, 27) */
 		reached[0][13] = 1;
@@ -535,12 +579,12 @@
 		/* merge: printf('Alarma apagada \\n')(27, 14, 27) */
 		reached[0][14] = 1;
 		Printf("Alarma apagada \n");
-		/* merge: codigo = 0(27, 15, 27) */
+		/* merge: codigo_ok = 0(27, 15, 27) */
 		reached[0][15] = 1;
-		(trpt+1)->bup.ovals[1] = ((int)now.codigo);
-		now.codigo = 0;
+		(trpt+1)->bup.ovals[1] = ((int)now.codigo_ok);
+		now.codigo_ok = 0;
 #ifdef VAR_RANGES
-		logval("codigo", ((int)now.codigo));
+		logval("codigo_ok", ((int)now.codigo_ok));
 #endif
 		;
 		/* merge: .(goto)(27, 17, 27) */
@@ -550,16 +594,16 @@
 		reached[0][28] = 1;
 		;
 		_m = 3; goto P999; /* 5 */
-	case 28: // STATE 19 - alarma.pml:23 - [((state_alarma==OFF))] (0:0:0 - 1)
+	case 35: // STATE 19 - alarma.pml:30 - [((state_alarma==OFF))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][19] = 1;
 		if (!((now.state_alarma==1)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 29: // STATE 20 - alarma.pml:25 - [(codigo)] (27:0:2 - 1)
+	case 36: // STATE 20 - alarma.pml:32 - [(codigo_ok)] (27:0:2 - 1)
 		IfNotBlocked
 		reached[0][20] = 1;
-		if (!(((int)now.codigo)))
+		if (!(((int)now.codigo_ok)))
 			continue;
 		/* merge: state_alarma = ON(27, 21, 27) */
 		reached[0][21] = 1;
@@ -573,12 +617,12 @@
 		/* merge: printf('Alarma encendida \\n')(27, 22, 27) */
 		reached[0][22] = 1;
 		Printf("Alarma encendida \n");
-		/* merge: codigo = 0(27, 23, 27) */
+		/* merge: codigo_ok = 0(27, 23, 27) */
 		reached[0][23] = 1;
-		(trpt+1)->bup.ovals[1] = ((int)now.codigo);
-		now.codigo = 0;
+		(trpt+1)->bup.ovals[1] = ((int)now.codigo_ok);
+		now.codigo_ok = 0;
 #ifdef VAR_RANGES
-		logval("codigo", ((int)now.codigo));
+		logval("codigo_ok", ((int)now.codigo_ok));
 #endif
 		;
 		/* merge: .(goto)(27, 25, 27) */
@@ -588,7 +632,7 @@
 		reached[0][28] = 1;
 		;
 		_m = 3; goto P999; /* 5 */
-	case 30: // STATE 30 - alarma.pml:29 - [-end-] (0:0:0 - 1)
+	case 37: // STATE 30 - alarma.pml:36 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[0][30] = 1;
 		if (!delproc(1, II)) continue;

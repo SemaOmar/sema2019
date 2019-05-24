@@ -66,7 +66,7 @@
 		
 	case 16: // STATE 3
 		;
-		now.boton = trpt->bup.oval;
+		now.interruptor = trpt->bup.oval;
 		;
 		goto R999;
 ;
@@ -93,15 +93,55 @@
 		;
 		goto R999;
 
-		 /* PROC fsm */
+		 /* PROC fsm_codigo */
 
 	case 23: // STATE 1
+		;
+		codigo_ok = trpt->bup.oval;
+		;
+		goto R999;
+;
+		;
+		
+	case 25: // STATE 3
+		;
+		codigo_ok = trpt->bup.oval;
+		;
+		goto R999;
+;
+		;
+		
+	case 27: // STATE 7
+		;
+		p_restor(II);
+		;
+		;
+		goto R999;
+
+		 /* PROC fsm_alarma */
+;
+		;
+		;
+		;
+		;
+		;
+		
+	case 31: // STATE 6
+		;
+		p_restor(II);
+		;
+		;
+		goto R999;
+
+		 /* PROC fsm_luz */
+
+	case 32: // STATE 1
 		;
 		now.state_luz = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 24: // STATE 2
+	case 33: // STATE 2
 		;
 		now.timer = trpt->bup.oval;
 		;
@@ -109,9 +149,9 @@
 ;
 		;
 		
-	case 26: // STATE 8
+	case 35: // STATE 8
 		;
-		now.boton = trpt->bup.ovals[2];
+		now.interruptor = trpt->bup.ovals[2];
 		now.presencia = trpt->bup.ovals[1];
 		now.state_luz = trpt->bup.ovals[0];
 		;
@@ -120,25 +160,25 @@
 ;
 		;
 		
-	case 28: // STATE 15
+	case 37: // STATE 15
 		;
 		now.presencia = trpt->bup.oval;
 		;
 		goto R999;
 ;
 		
-	case 29: // STATE 25
+	case 38: // STATE 25
 		goto R999;
 
-	case 30: // STATE 19
+	case 39: // STATE 19
 		;
-		now.boton = trpt->bup.ovals[1];
+		now.interruptor = trpt->bup.ovals[1];
 		now.state_luz = trpt->bup.ovals[0];
 		;
 		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
 
-	case 31: // STATE 23
+	case 40: // STATE 23
 		;
 		now.timer = trpt->bup.ovals[1];
 		now.state_luz = trpt->bup.ovals[0];
@@ -146,7 +186,7 @@
 		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
 
-	case 32: // STATE 30
+	case 41: // STATE 30
 		;
 		p_restor(II);
 		;

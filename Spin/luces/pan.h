@@ -121,7 +121,7 @@
 #endif
 #ifdef NP
 	#define HAS_NP	2
-	#define VERI	6	/* np_ */
+	#define VERI	8	/* np_ */
 #endif
 #if defined(NOCLAIM) && defined(NP)
 	#undef NOCLAIM
@@ -129,7 +129,7 @@
 #ifndef NOCLAIM
 	#define NCLAIMS	4
 	#ifndef NP
-		#define VERI	5
+		#define VERI	7
 	#endif
 #endif
 
@@ -139,42 +139,56 @@ typedef struct S_F_MAP {
 	int upto;
 } S_F_MAP;
 
-#define _nstates5	11	/* spec4 */
-#define minseq5	84
-#define maxseq5	93
-#define _endstate5	10
+#define _nstates7	11	/* spec4 */
+#define minseq7	97
+#define maxseq7	106
+#define _endstate7	10
 
-#define _nstates4	14	/* spec3 */
-#define minseq4	71
-#define maxseq4	83
+#define _nstates6	14	/* spec3 */
+#define minseq6	84
+#define maxseq6	96
+#define _endstate6	13
+
+#define _nstates5	14	/* spec2 */
+#define minseq5	71
+#define maxseq5	83
+#define _endstate5	13
+
+#define _nstates4	14	/* spec1 */
+#define minseq4	58
+#define maxseq4	70
 #define _endstate4	13
 
-#define _nstates3	14	/* spec2 */
-#define minseq3	58
-#define maxseq3	70
-#define _endstate3	13
+#define _nstates3	16	/* actions */
+#define minseq3	43
+#define maxseq3	57
+#define _endstate3	15
 
-#define _nstates2	14	/* spec1 */
-#define minseq2	45
-#define maxseq2	57
-#define _endstate2	13
+#define _nstates2	8	/* fsm_codigo */
+#define minseq2	36
+#define maxseq2	42
+#define _endstate2	7
 
-#define _nstates1	16	/* actions */
+#define _nstates1	7	/* fsm_alarma */
 #define minseq1	30
-#define maxseq1	44
-#define _endstate1	15
+#define maxseq1	35
+#define _endstate1	6
 
-#define _nstates0	31	/* fsm */
+#define _nstates0	31	/* fsm_luz */
 #define minseq0	0
 #define maxseq0	29
 #define _endstate0	30
 
+extern short src_ln7[];
+extern short src_ln6[];
 extern short src_ln5[];
 extern short src_ln4[];
 extern short src_ln3[];
 extern short src_ln2[];
 extern short src_ln1[];
 extern short src_ln0[];
+extern S_F_MAP src_file7[];
+extern S_F_MAP src_file6[];
 extern S_F_MAP src_file5[];
 extern S_F_MAP src_file4[];
 extern S_F_MAP src_file3[];
@@ -183,8 +197,8 @@ extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
 #define T_ID	unsigned char
-#define _T5	33
-#define _T2	34
+#define _T5	42
+#define _T2	43
 #define WS		8 /* word size in bytes */
 #define SYNC	0
 #define ASYNC	0
@@ -199,71 +213,19 @@ extern S_F_MAP src_file0[];
 	#endif
 #endif
 
-typedef struct P5 { /* spec4 */
+typedef struct P7 { /* spec4 */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
+	unsigned _t   : 5; /* proctype */
 	unsigned _p   : 6; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
-} P5;
-#define Air5	(sizeof(P5) - 3)
+} P7;
+#define Air7	(sizeof(P7) - 3)
 
-typedef struct P4 { /* spec3 */
+typedef struct P6 { /* spec3 */
 	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 6; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P4;
-#define Air4	(sizeof(P4) - 3)
-
-typedef struct P3 { /* spec2 */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 6; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P3;
-#define Air3	(sizeof(P3) - 3)
-
-typedef struct P2 { /* spec1 */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 6; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P2;
-#define Air2	(sizeof(P2) - 3)
-
-#define Pactions	((P1 *)_this)
-typedef struct P1 { /* actions */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 6; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P1;
-#define Air1	(sizeof(P1) - 3)
-
-#define Pfsm	((P0 *)_this)
-typedef struct P0 { /* fsm */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
-	unsigned _p   : 6; /* state    */
-#ifdef HAS_PRIORITY
-	unsigned _priority : 8; /* 0..255 */
-#endif
-} P0;
-#define Air0	(sizeof(P0) - 3)
-
-typedef struct P6 { /* np_ */
-	unsigned _pid : 8;  /* 0..255 */
-	unsigned _t   : 4; /* proctype */
+	unsigned _t   : 5; /* proctype */
 	unsigned _p   : 6; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
@@ -271,22 +233,96 @@ typedef struct P6 { /* np_ */
 } P6;
 #define Air6	(sizeof(P6) - 3)
 
+typedef struct P5 { /* spec2 */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 6; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P5;
+#define Air5	(sizeof(P5) - 3)
+
+typedef struct P4 { /* spec1 */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 6; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P4;
+#define Air4	(sizeof(P4) - 3)
+
+#define Pactions	((P3 *)_this)
+typedef struct P3 { /* actions */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 6; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P3;
+#define Air3	(sizeof(P3) - 3)
+
+#define Pfsm_codigo	((P2 *)_this)
+typedef struct P2 { /* fsm_codigo */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 6; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P2;
+#define Air2	(sizeof(P2) - 3)
+
+#define Pfsm_alarma	((P1 *)_this)
+typedef struct P1 { /* fsm_alarma */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 6; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P1;
+#define Air1	(sizeof(P1) - 3)
+
+#define Pfsm_luz	((P0 *)_this)
+typedef struct P0 { /* fsm_luz */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 6; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P0;
+#define Air0	(sizeof(P0) - 3)
+
+typedef struct P8 { /* np_ */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 5; /* proctype */
+	unsigned _p   : 6; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P8;
+#define Air8	(sizeof(P8) - 3)
+
 
 #ifndef NOCLAIM
  #ifndef NP
 	#undef VERI
-	#define VERI	7
+	#define VERI	9
  #endif
-	#define Pclaim	P7
+	#define Pclaim	P9
 
-typedef struct P7 {
+typedef struct P9 {
 	unsigned _pid : 8; /* always zero */
-	unsigned _t   : 4; /* active-claim type  */
+	unsigned _t   : 5; /* active-claim type  */
 	unsigned _p   : 6; /* active-claim state */
 	unsigned _n   : 3; /* active-claim index */
 	uchar c_cur[NCLAIMS]; /* claim-states */
-} P7;
-	#define Air7	(0)
+} P9;
+	#define Air9	(0)
 
 #endif
 #if defined(BFS) && defined(REACH)
@@ -476,7 +512,7 @@ typedef struct State {
 	#endif
 #endif
 	unsigned presencia : 1;
-	unsigned boton : 1;
+	unsigned interruptor : 1;
 	unsigned timer : 1;
 	uchar state_luz;
 #ifdef TRIX
@@ -500,19 +536,23 @@ typedef struct TRIX_v6 {
 #endif
 
 #define HAS_TRACK	0
+/* hidden variable: */	uchar boton;
+/* hidden variable: */	uchar codigo_ok;
 #define FORWARD_MOVES	"pan.m"
 #define BACKWARD_MOVES	"pan.b"
 #define TRANSITIONS	"pan.t"
-#define _NP_	6
-#define _nstates6	3 /* np_ */
-#define _endstate6	2 /* np_ */
+#define _NP_	8
+#define _nstates8	3 /* np_ */
+#define _endstate8	2 /* np_ */
 
-#define _start6	0 /* np_ */
-#define _start5	6
+#define _start8	0 /* np_ */
+#define _start7	6
+#define _start6	5
+#define _start5	5
 #define _start4	5
-#define _start3	5
+#define _start3	12
 #define _start2	5
-#define _start1	12
+#define _start1	4
 #define _start0	1
 #ifdef NP
 	#define ACCEPT_LAB	1 /* at least 1 in np_ */
@@ -873,7 +913,7 @@ void qsend(int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	35
+#define NTRANS	44
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);

@@ -9,10 +9,10 @@ accept_S4:
 	:: (! (((state_luz==on)))) -> goto accept_S4
 	od;
 }
-never spec2 {    /* !([] ((! (((state_luz==off)) && (boton))) || (<> ((state_luz==on))))) */
+never spec2 {    /* !([] ((! (((state_luz==off)) && (interruptor))) || (<> ((state_luz==on))))) */
 T0_init:
 	do
-	:: (! ((! (((state_luz==off)) && (boton)))) && ! (((state_luz==on)))) -> goto accept_S4
+	:: (! ((! (((state_luz==off)) && (interruptor)))) && ! (((state_luz==on)))) -> goto accept_S4
 	:: (1) -> goto T0_init
 	od;
 accept_S4:
@@ -20,10 +20,10 @@ accept_S4:
 	:: (! (((state_luz==on)))) -> goto accept_S4
 	od;
 }
-never spec3 {    /* !([] ((! (((state_luz==on)) && (boton))) || (<> ((state_luz==on))))) */
+never spec3 {    /* !([] ((! (((state_luz==on)) && (interruptor))) || (<> ((state_luz==on))))) */
 T0_init:
 	do
-	:: (! ((! (((state_luz==on)) && (boton)))) && ! (((state_luz==on)))) -> goto accept_S4
+	:: (! ((! (((state_luz==on)) && (interruptor)))) && ! (((state_luz==on)))) -> goto accept_S4
 	:: (1) -> goto T0_init
 	od;
 accept_S4:
@@ -31,10 +31,10 @@ accept_S4:
 	:: (! (((state_luz==on)))) -> goto accept_S4
 	od;
 }
-never spec4 {    /* !([] ((!(((state_luz==on)&&((!(presencia)||boton)||timer)))|334))) */
+never spec4 {    /* !([] ((!(((state_luz==on)&&((!(presencia)||interruptor)||timer)))|334))) */
 T0_init:
 	do
-	:: atomic { (! (((!(((state_luz==on)&&((!(presencia)||boton)||timer)))|334)))) -> assert(!(! (((!(((state_luz==on)&&((!(presencia)||boton)||timer)))|334))))) }
+	:: atomic { (! (((!(((state_luz==on)&&((!(presencia)||interruptor)||timer)))|334)))) -> assert(!(! (((!(((state_luz==on)&&((!(presencia)||interruptor)||timer)))|334))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_all:

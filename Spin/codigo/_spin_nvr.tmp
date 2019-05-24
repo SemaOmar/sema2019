@@ -1,7 +1,7 @@
-never spec1 {    /* !([] ((!(((state==OFF)&&pulsacion))|334))) */
+never spec1 {    /* !([] ((!(((state==OFF)&&boton))|334))) */
 T0_init:
 	do
-	:: atomic { (! (((!(((state==OFF)&&pulsacion))|334)))) -> assert(!(! (((!(((state==OFF)&&pulsacion))|334))))) }
+	:: atomic { (! (((!(((state==OFF)&&boton))|334)))) -> assert(!(! (((!(((state==OFF)&&boton))|334))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_all:

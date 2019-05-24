@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm pan* *tmp *il
+spin -a alarma.pml
+gcc -o pan pan.c

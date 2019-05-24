@@ -528,7 +528,7 @@ typedef struct State {
 		unsigned short _event;
 	#endif
 #endif
-	unsigned pulsacion : 1;
+	unsigned boton : 1;
 	unsigned time_out : 1;
 	unsigned numero_correcto : 1;
 	unsigned codigo_ok : 1;
@@ -555,7 +555,7 @@ typedef struct TRIX_v6 {
 
 #define HAS_TRACK	0
 /* hidden variable: */	uchar presencia;
-/* hidden variable: */	uchar boton;
+/* hidden variable: */	uchar interruptor;
 #define FORWARD_MOVES	"pan.m"
 #define BACKWARD_MOVES	"pan.b"
 #define TRANSITIONS	"pan.t"

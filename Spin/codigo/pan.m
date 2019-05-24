@@ -256,7 +256,7 @@
 		_m = 3; goto P999; /* 0 */
 
 		 /* CLAIM spec1 */
-	case 11: // STATE 1 - _spin_nvr.tmp:3 - [(!((!(((state==OFF)&&pulsacion))|334)))] (6:0:0 - 1)
+	case 11: // STATE 1 - _spin_nvr.tmp:3 - [(!((!(((state==OFF)&&boton))|334)))] (6:0:0 - 1)
 		
 #if defined(VERI) && !defined(NP)
 #if NCLAIMS>1
@@ -279,11 +279,11 @@
 #endif
 #endif
 		reached[4][1] = 1;
-		if (!( !(( !(((now.state==4)&&((int)now.pulsacion)))|334))))
+		if (!( !(( !(((now.state==4)&&((int)now.boton)))|334))))
 			continue;
-		/* merge: assert(!(!((!(((state==OFF)&&pulsacion))|334))))(0, 2, 6) */
+		/* merge: assert(!(!((!(((state==OFF)&&boton))|334))))(0, 2, 6) */
 		reached[4][2] = 1;
-		spin_assert( !( !(( !(((now.state==4)&&((int)now.pulsacion)))|334))), " !( !(( !(((state==4)&&pulsacion))|334)))", II, tt, t);
+		spin_assert( !( !(( !(((now.state==4)&&((int)now.boton)))|334))), " !( !(( !(((state==4)&&boton))|334)))", II, tt, t);
 		/* merge: .(goto)(0, 7, 6) */
 		reached[4][7] = 1;
 		;
@@ -330,35 +330,35 @@
 		reached[3][2] = 1;
 		Printf("PRESENCIA\n");
 		_m = 3; goto P999; /* 0 */
-	case 15: // STATE 3 - codigo.pml:78 - [boton = 1] (0:0:1 - 1)
+	case 15: // STATE 3 - codigo.pml:78 - [interruptor = 1] (0:0:1 - 1)
 		IfNotBlocked
 		reached[3][3] = 1;
-		(trpt+1)->bup.oval = ((int)boton);
-		boton = 1;
+		(trpt+1)->bup.oval = ((int)interruptor);
+		interruptor = 1;
 #ifdef VAR_RANGES
-		logval("boton", ((int)boton));
+		logval("interruptor", ((int)interruptor));
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 16: // STATE 4 - codigo.pml:78 - [printf('BOTON\\n')] (0:0:0 - 1)
+	case 16: // STATE 4 - codigo.pml:78 - [printf('interruptor\\n')] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][4] = 1;
-		Printf("BOTON\n");
+		Printf("interruptor\n");
 		_m = 3; goto P999; /* 0 */
-	case 17: // STATE 5 - codigo.pml:79 - [pulsacion = 1] (0:0:1 - 1)
+	case 17: // STATE 5 - codigo.pml:79 - [boton = 1] (0:0:1 - 1)
 		IfNotBlocked
 		reached[3][5] = 1;
-		(trpt+1)->bup.oval = ((int)now.pulsacion);
-		now.pulsacion = 1;
+		(trpt+1)->bup.oval = ((int)now.boton);
+		now.boton = 1;
 #ifdef VAR_RANGES
-		logval("pulsacion", ((int)now.pulsacion));
+		logval("boton", ((int)now.boton));
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 18: // STATE 6 - codigo.pml:79 - [printf('PULSACION\\n')] (0:0:0 - 1)
+	case 18: // STATE 6 - codigo.pml:79 - [printf('boton\\n')] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][6] = 1;
-		Printf("PULSACION\n");
+		Printf("boton\n");
 		_m = 3; goto P999; /* 0 */
 	case 19: // STATE 7 - codigo.pml:80 - [time_out = 1] (0:0:1 - 1)
 		IfNotBlocked
@@ -452,21 +452,21 @@
 		if (!((now.state==4)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 33: // STATE 3 - codigo.pml:30 - [(pulsacion)] (56:0:3 - 1)
+	case 33: // STATE 3 - codigo.pml:30 - [(boton)] (56:0:3 - 1)
 		IfNotBlocked
 		reached[0][3] = 1;
-		if (!(((int)now.pulsacion)))
+		if (!(((int)now.boton)))
 			continue;
 		/* merge: printf('Introduccion Codigo\\n')(56, 4, 56) */
 		reached[0][4] = 1;
 		Printf("Introduccion Codigo\n");
-		/* merge: pulsacion = 0(56, 5, 56) */
+		/* merge: boton = 0(56, 5, 56) */
 		reached[0][5] = 1;
 		(trpt+1)->bup.ovals = grab_ints(3);
-		(trpt+1)->bup.ovals[0] = ((int)now.pulsacion);
-		now.pulsacion = 0;
+		(trpt+1)->bup.ovals[0] = ((int)now.boton);
+		now.boton = 0;
 #ifdef VAR_RANGES
-		logval("pulsacion", ((int)now.pulsacion));
+		logval("boton", ((int)now.boton));
 #endif
 		;
 		/* merge: time_out = 0(56, 6, 56) */
@@ -558,20 +558,20 @@
 		reached[0][57] = 1;
 		;
 		_m = 3; goto P999; /* 1 */
-	case 39: // STATE 17 - codigo.pml:37 - [((pulsacion&&!(time_out)))] (56:0:1 - 1)
+	case 39: // STATE 17 - codigo.pml:37 - [((boton&&!(time_out)))] (56:0:1 - 1)
 		IfNotBlocked
 		reached[0][17] = 1;
-		if (!((((int)now.pulsacion)&& !(((int)now.time_out)))))
+		if (!((((int)now.boton)&& !(((int)now.time_out)))))
 			continue;
 		/* merge: printf('Digito incrementado\\n')(56, 18, 56) */
 		reached[0][18] = 1;
 		Printf("Digito incrementado\n");
-		/* merge: pulsacion = 0(56, 19, 56) */
+		/* merge: boton = 0(56, 19, 56) */
 		reached[0][19] = 1;
-		(trpt+1)->bup.oval = ((int)now.pulsacion);
-		now.pulsacion = 0;
+		(trpt+1)->bup.oval = ((int)now.boton);
+		now.boton = 0;
 #ifdef VAR_RANGES
-		logval("pulsacion", ((int)now.pulsacion));
+		logval("boton", ((int)now.boton));
 #endif
 		;
 		/* merge: .(goto)(56, 22, 56) */
@@ -639,20 +639,20 @@
 		reached[0][57] = 1;
 		;
 		_m = 3; goto P999; /* 1 */
-	case 44: // STATE 29 - codigo.pml:44 - [((pulsacion&&!(time_out)))] (56:0:1 - 1)
+	case 44: // STATE 29 - codigo.pml:44 - [((boton&&!(time_out)))] (56:0:1 - 1)
 		IfNotBlocked
 		reached[0][29] = 1;
-		if (!((((int)now.pulsacion)&& !(((int)now.time_out)))))
+		if (!((((int)now.boton)&& !(((int)now.time_out)))))
 			continue;
 		/* merge: printf('Digito incrementado\\n')(56, 30, 56) */
 		reached[0][30] = 1;
 		Printf("Digito incrementado\n");
-		/* merge: pulsacion = 0(56, 31, 56) */
+		/* merge: boton = 0(56, 31, 56) */
 		reached[0][31] = 1;
-		(trpt+1)->bup.oval = ((int)now.pulsacion);
-		now.pulsacion = 0;
+		(trpt+1)->bup.oval = ((int)now.boton);
+		now.boton = 0;
 #ifdef VAR_RANGES
-		logval("pulsacion", ((int)now.pulsacion));
+		logval("boton", ((int)now.boton));
 #endif
 		;
 		/* merge: .(goto)(56, 34, 56) */
@@ -784,20 +784,20 @@
 		reached[0][57] = 1;
 		;
 		_m = 3; goto P999; /* 7 */
-	case 50: // STATE 49 - codigo.pml:52 - [((pulsacion&&!(time_out)))] (56:0:1 - 1)
+	case 50: // STATE 49 - codigo.pml:52 - [((boton&&!(time_out)))] (56:0:1 - 1)
 		IfNotBlocked
 		reached[0][49] = 1;
-		if (!((((int)now.pulsacion)&& !(((int)now.time_out)))))
+		if (!((((int)now.boton)&& !(((int)now.time_out)))))
 			continue;
 		/* merge: printf('Digito incrementado\\n')(56, 50, 56) */
 		reached[0][50] = 1;
 		Printf("Digito incrementado\n");
-		/* merge: pulsacion = 0(56, 51, 56) */
+		/* merge: boton = 0(56, 51, 56) */
 		reached[0][51] = 1;
-		(trpt+1)->bup.oval = ((int)now.pulsacion);
-		now.pulsacion = 0;
+		(trpt+1)->bup.oval = ((int)now.boton);
+		now.boton = 0;
 #ifdef VAR_RANGES
-		logval("pulsacion", ((int)now.pulsacion));
+		logval("boton", ((int)now.boton));
 #endif
 		;
 		/* merge: .(goto)(56, 54, 56) */

@@ -79,7 +79,7 @@
 		
 	case 15: // STATE 3
 		;
-		boton = trpt->bup.oval;
+		interruptor = trpt->bup.oval;
 		;
 		goto R999;
 ;
@@ -87,7 +87,7 @@
 		
 	case 17: // STATE 5
 		;
-		now.pulsacion = trpt->bup.oval;
+		now.boton = trpt->bup.oval;
 		;
 		goto R999;
 ;
@@ -158,7 +158,7 @@
 		;
 		now.state = trpt->bup.ovals[2];
 		now.time_out = trpt->bup.ovals[1];
-		now.pulsacion = trpt->bup.ovals[0];
+		now.boton = trpt->bup.ovals[0];
 		;
 		ungrab_ints(trpt->bup.ovals, 3);
 		goto R999;
@@ -187,7 +187,7 @@
 
 	case 39: // STATE 19
 		;
-		now.pulsacion = trpt->bup.oval;
+		now.boton = trpt->bup.oval;
 		;
 		goto R999;
 ;
@@ -211,7 +211,7 @@
 
 	case 44: // STATE 31
 		;
-		now.pulsacion = trpt->bup.oval;
+		now.boton = trpt->bup.oval;
 		;
 		goto R999;
 ;
@@ -247,7 +247,7 @@
 
 	case 50: // STATE 51
 		;
-		now.pulsacion = trpt->bup.oval;
+		now.boton = trpt->bup.oval;
 		;
 		goto R999;
 ;

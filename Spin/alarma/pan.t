@@ -22,166 +22,190 @@ settable(void)
 {	Trans *T;
 	Trans *settr(int, int, int, int, int, char *, int, int, int);
 
-	trans = (Trans ***) emalloc(7*sizeof(Trans **));
+	trans = (Trans ***) emalloc(9*sizeof(Trans **));
 
-	/* proctype 5: spec4 */
+	/* proctype 7: spec4 */
+
+	trans[7] = (Trans **) emalloc(14*sizeof(Trans *));
+
+	trans[7][6]	= settr(102,0,5,1,0,".(goto)", 0, 2, 0);
+	T = trans[7][5] = settr(101,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(101,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(101,0,3,0,0,"DO", 0, 2, 0);
+	trans[7][1]	= settr(97,0,10,3,0,"((!(!(((state_alarma==OFF)&&codigo_ok)))&&!((state_alarma==ON))))", 1, 2, 0);
+	trans[7][2]	= settr(98,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[7][3]	= settr(99,0,5,1,0,"(1)", 0, 2, 0);
+	trans[7][4]	= settr(100,0,5,1,0,"goto T0_init", 0, 2, 0);
+	trans[7][7]	= settr(103,0,10,1,0,"break", 0, 2, 0);
+	trans[7][11]	= settr(107,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[7][10] = settr(106,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(106,0,8,0,0,"DO", 0, 2, 0);
+	trans[7][8]	= settr(104,0,10,4,0,"(!((state_alarma==ON)))", 1, 2, 0);
+	trans[7][9]	= settr(105,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[7][12]	= settr(108,0,13,1,0,"break", 0, 2, 0);
+	trans[7][13]	= settr(109,0,0,5,5,"-end-", 0, 3500, 0);
+
+	/* proctype 6: spec3 */
+
+	trans[6] = (Trans **) emalloc(14*sizeof(Trans *));
+
+	trans[6][6]	= settr(89,0,5,1,0,".(goto)", 0, 2, 0);
+	T = trans[6][5] = settr(88,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(88,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(88,0,3,0,0,"DO", 0, 2, 0);
+	trans[6][1]	= settr(84,0,10,6,0,"((!(!((((state_alarma==ON)&&codigo_ok)&&!(alerta))))&&!((state_alarma==OFF))))", 1, 2, 0);
+	trans[6][2]	= settr(85,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[6][3]	= settr(86,0,5,1,0,"(1)", 0, 2, 0);
+	trans[6][4]	= settr(87,0,5,1,0,"goto T0_init", 0, 2, 0);
+	trans[6][7]	= settr(90,0,10,1,0,"break", 0, 2, 0);
+	trans[6][11]	= settr(94,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[6][10] = settr(93,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(93,0,8,0,0,"DO", 0, 2, 0);
+	trans[6][8]	= settr(91,0,10,7,0,"(!((state_alarma==OFF)))", 1, 2, 0);
+	trans[6][9]	= settr(92,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[6][12]	= settr(95,0,13,1,0,"break", 0, 2, 0);
+	trans[6][13]	= settr(96,0,0,8,8,"-end-", 0, 3500, 0);
+
+	/* proctype 5: spec2 */
 
 	trans[5] = (Trans **) emalloc(14*sizeof(Trans *));
 
-	trans[5][6]	= settr(91,0,5,1,0,".(goto)", 0, 2, 0);
-	T = trans[5][5] = settr(90,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(90,0,1,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(90,0,3,0,0,"DO", 0, 2, 0);
-	trans[5][1]	= settr(86,0,10,3,0,"((!(!(((state_alarma==OFF)&&codigo)))&&!((state_alarma==ON))))", 1, 2, 0);
-	trans[5][2]	= settr(87,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[5][3]	= settr(88,0,5,1,0,"(1)", 0, 2, 0);
-	trans[5][4]	= settr(89,0,5,1,0,"goto T0_init", 0, 2, 0);
-	trans[5][7]	= settr(92,0,10,1,0,"break", 0, 2, 0);
-	trans[5][11]	= settr(96,0,10,1,0,".(goto)", 0, 2, 0);
-	T = trans[5][10] = settr(95,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(95,0,8,0,0,"DO", 0, 2, 0);
-	trans[5][8]	= settr(93,0,10,4,0,"(!((state_alarma==ON)))", 1, 2, 0);
-	trans[5][9]	= settr(94,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[5][12]	= settr(97,0,13,1,0,"break", 0, 2, 0);
-	trans[5][13]	= settr(98,0,0,5,5,"-end-", 0, 3500, 0);
+	trans[5][6]	= settr(76,0,5,1,0,".(goto)", 0, 2, 0);
+	T = trans[5][5] = settr(75,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(75,0,1,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(75,0,3,0,0,"DO", 0, 2, 0);
+	trans[5][1]	= settr(71,0,10,9,0,"((!(!((((state_alarma==ON)&&codigo_ok)&&alerta)))&&!((alerta==0))))", 1, 2, 0);
+	trans[5][2]	= settr(72,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[5][3]	= settr(73,0,5,1,0,"(1)", 0, 2, 0);
+	trans[5][4]	= settr(74,0,5,1,0,"goto T0_init", 0, 2, 0);
+	trans[5][7]	= settr(77,0,10,1,0,"break", 0, 2, 0);
+	trans[5][11]	= settr(81,0,10,1,0,".(goto)", 0, 2, 0);
+	T = trans[5][10] = settr(80,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(80,0,8,0,0,"DO", 0, 2, 0);
+	trans[5][8]	= settr(78,0,10,10,0,"(!((alerta==0)))", 1, 2, 0);
+	trans[5][9]	= settr(79,0,10,1,0,"goto accept_S4", 0, 2, 0);
+	trans[5][12]	= settr(82,0,13,1,0,"break", 0, 2, 0);
+	trans[5][13]	= settr(83,0,0,11,11,"-end-", 0, 3500, 0);
 
-	/* proctype 4: spec3 */
+	/* proctype 4: spec1 */
 
-	trans[4] = (Trans **) emalloc(14*sizeof(Trans *));
+	trans[4] = (Trans **) emalloc(21*sizeof(Trans *));
 
-	trans[4][6]	= settr(78,0,5,1,0,".(goto)", 0, 2, 0);
-	T = trans[4][5] = settr(77,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(77,0,1,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(77,0,3,0,0,"DO", 0, 2, 0);
-	trans[4][1]	= settr(73,0,10,6,0,"((!(!((((state_alarma==ON)&&codigo)&&!(alerta))))&&!((state_alarma==OFF))))", 1, 2, 0);
-	trans[4][2]	= settr(74,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[4][3]	= settr(75,0,5,1,0,"(1)", 0, 2, 0);
-	trans[4][4]	= settr(76,0,5,1,0,"goto T0_init", 0, 2, 0);
-	trans[4][7]	= settr(79,0,10,1,0,"break", 0, 2, 0);
-	trans[4][11]	= settr(83,0,10,1,0,".(goto)", 0, 2, 0);
-	T = trans[4][10] = settr(82,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(82,0,8,0,0,"DO", 0, 2, 0);
-	trans[4][8]	= settr(80,0,10,7,0,"(!((state_alarma==OFF)))", 1, 2, 0);
-	trans[4][9]	= settr(81,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[4][12]	= settr(84,0,13,1,0,"break", 0, 2, 0);
-	trans[4][13]	= settr(85,0,0,8,8,"-end-", 0, 3500, 0);
+	trans[4][8]	= settr(58,0,7,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][7] = settr(57,0,0,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(57,0,1,0,0,"DO", 0, 2, 0);
+	T = T->nxt	= settr(57,0,3,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(57,0,5,0,0,"DO", 0, 2, 0);
+	trans[4][1]	= settr(51,0,12,12,0,"(((!(codigo_ok)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))", 1, 2, 0);
+	trans[4][2]	= settr(52,0,12,1,0,"goto accept_S7", 0, 2, 0);
+	trans[4][3]	= settr(53,0,17,13,0,"(((!(codigo_ok)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))", 1, 2, 0);
+	trans[4][4]	= settr(54,0,17,1,0,"goto T0_S27", 0, 2, 0);
+	trans[4][5]	= settr(55,0,7,1,0,"(1)", 0, 2, 0);
+	trans[4][6]	= settr(56,0,7,1,0,"goto T0_init", 0, 2, 0);
+	trans[4][9]	= settr(59,0,12,1,0,"break", 0, 2, 0);
+	trans[4][13]	= settr(63,0,12,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][12] = settr(62,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(62,0,10,0,0,"DO", 0, 2, 0);
+	trans[4][10]	= settr(60,0,12,14,0,"((!(codigo_ok)&&!((alerta==1))))", 1, 2, 0);
+	trans[4][11]	= settr(61,0,12,1,0,"goto accept_S7", 0, 2, 0);
+	trans[4][14]	= settr(64,0,17,1,0,"break", 0, 2, 0);
+	trans[4][18]	= settr(68,0,17,1,0,".(goto)", 0, 2, 0);
+	T = trans[4][17] = settr(67,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(67,0,15,0,0,"DO", 0, 2, 0);
+	trans[4][15]	= settr(65,0,17,15,0,"((!(codigo_ok)&&!((alerta==1))))", 1, 2, 0);
+	trans[4][16]	= settr(66,0,17,1,0,"goto T0_S27", 0, 2, 0);
+	trans[4][19]	= settr(69,0,20,1,0,"break", 0, 2, 0);
+	trans[4][20]	= settr(70,0,0,16,16,"-end-", 0, 3500, 0);
 
-	/* proctype 3: spec2 */
+	/* proctype 3: Actions */
 
-	trans[3] = (Trans **) emalloc(14*sizeof(Trans *));
+	trans[3] = (Trans **) emalloc(10*sizeof(Trans *));
 
-	trans[3][6]	= settr(65,0,5,1,0,".(goto)", 0, 2, 0);
-	T = trans[3][5] = settr(64,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(64,0,1,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(64,0,3,0,0,"DO", 0, 2, 0);
-	trans[3][1]	= settr(60,0,10,9,0,"((!(!((((state_alarma==ON)&&codigo)&&alerta)))&&!((alerta==0))))", 1, 2, 0);
-	trans[3][2]	= settr(61,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[3][3]	= settr(62,0,5,1,0,"(1)", 0, 2, 0);
-	trans[3][4]	= settr(63,0,5,1,0,"goto T0_init", 0, 2, 0);
-	trans[3][7]	= settr(66,0,10,1,0,"break", 0, 2, 0);
-	trans[3][11]	= settr(70,0,10,1,0,".(goto)", 0, 2, 0);
-	T = trans[3][10] = settr(69,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(69,0,8,0,0,"DO", 0, 2, 0);
-	trans[3][8]	= settr(67,0,10,10,0,"(!((alerta==0)))", 1, 2, 0);
-	trans[3][9]	= settr(68,0,10,1,0,"goto accept_S4", 0, 2, 0);
-	trans[3][12]	= settr(71,0,13,1,0,"break", 0, 2, 0);
-	trans[3][13]	= settr(72,0,0,11,11,"-end-", 0, 3500, 0);
+	trans[3][7]	= settr(48,0,6,1,0,".(goto)", 0, 2, 0);
+	T = trans[3][6] = settr(47,0,0,0,0,"DO", 0, 2, 0);
+	    T->nxt	= settr(47,0,3,0,0,"DO", 0, 2, 0);
+	T = trans[3][3] = settr(44,0,0,0,0,"IF", 0, 2, 0);
+	T = T->nxt	= settr(44,0,1,0,0,"IF", 0, 2, 0);
+	    T->nxt	= settr(44,0,2,0,0,"IF", 0, 2, 0);
+	trans[3][1]	= settr(42,0,5,17,17,"presencia = 1", 1, 2, 0);
+	trans[3][4]	= settr(45,0,5,1,0,".(goto)", 0, 2, 0);
+	trans[3][2]	= settr(43,0,5,1,0,"(1)", 0, 2, 0);
+	trans[3][5]	= settr(46,0,6,18,0,"printf('estado: %e , presencia: %d, codigo_ok: %d, alerta: %d  \\n',state_alarma,presencia,codigo_ok,alerta)", 1, 2, 0);
+	trans[3][8]	= settr(49,0,9,1,0,"break", 0, 2, 0);
+	trans[3][9]	= settr(50,0,0,19,19,"-end-", 0, 3500, 0);
 
-	/* proctype 2: spec1 */
+	/* proctype 2: fsm_codigo */
 
-	trans[2] = (Trans **) emalloc(21*sizeof(Trans *));
+	trans[2] = (Trans **) emalloc(8*sizeof(Trans *));
 
-	trans[2][8]	= settr(47,0,7,1,0,".(goto)", 0, 2, 0);
-	T = trans[2][7] = settr(46,0,0,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(46,0,1,0,0,"DO", 0, 2, 0);
-	T = T->nxt	= settr(46,0,3,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(46,0,5,0,0,"DO", 0, 2, 0);
-	trans[2][1]	= settr(40,0,12,12,0,"(((!(codigo)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))", 1, 2, 0);
-	trans[2][2]	= settr(41,0,12,1,0,"goto accept_S7", 0, 2, 0);
-	trans[2][3]	= settr(42,0,17,13,0,"(((!(codigo)&&!((alerta==1)))&&((state_alarma==ON)&&presencia)))", 1, 2, 0);
-	trans[2][4]	= settr(43,0,17,1,0,"goto T0_S27", 0, 2, 0);
-	trans[2][5]	= settr(44,0,7,1,0,"(1)", 0, 2, 0);
-	trans[2][6]	= settr(45,0,7,1,0,"goto T0_init", 0, 2, 0);
-	trans[2][9]	= settr(48,0,12,1,0,"break", 0, 2, 0);
-	trans[2][13]	= settr(52,0,12,1,0,".(goto)", 0, 2, 0);
-	T = trans[2][12] = settr(51,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(51,0,10,0,0,"DO", 0, 2, 0);
-	trans[2][10]	= settr(49,0,12,14,0,"((!(codigo)&&!((alerta==1))))", 1, 2, 0);
-	trans[2][11]	= settr(50,0,12,1,0,"goto accept_S7", 0, 2, 0);
-	trans[2][14]	= settr(53,0,17,1,0,"break", 0, 2, 0);
-	trans[2][18]	= settr(57,0,17,1,0,".(goto)", 0, 2, 0);
-	T = trans[2][17] = settr(56,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(56,0,15,0,0,"DO", 0, 2, 0);
-	trans[2][15]	= settr(54,0,17,15,0,"((!(codigo)&&!((alerta==1))))", 1, 2, 0);
-	trans[2][16]	= settr(55,0,17,1,0,"goto T0_S27", 0, 2, 0);
-	trans[2][19]	= settr(58,0,20,1,0,"break", 0, 2, 0);
-	trans[2][20]	= settr(59,0,0,16,16,"-end-", 0, 3500, 0);
+	T = trans[2][5] = settr(39,0,0,0,0,"IF", 0, 2, 0);
+	T = T->nxt	= settr(39,0,1,0,0,"IF", 0, 2, 0);
+	    T->nxt	= settr(39,0,3,0,0,"IF", 0, 2, 0);
+	trans[2][1]	= settr(35,0,2,20,20,"codigo_ok = 1", 1, 2, 0);
+	trans[2][2]	= settr(36,0,7,21,0,"printf('Codogo OK\\n')", 0, 2, 0);
+	trans[2][6]	= settr(40,0,7,1,0,".(goto)", 0, 2, 0);
+	trans[2][3]	= settr(37,0,4,22,22,"codigo_ok = 0", 1, 2, 0);
+	trans[2][4]	= settr(38,0,7,23,0,"printf('Codigo ERROR\\n')", 0, 2, 0);
+	trans[2][7]	= settr(41,0,0,24,24,"-end-", 0, 3500, 0);
 
-	/* proctype 1: Actions */
+	/* proctype 1: fsm_luz */
 
-	trans[1] = (Trans **) emalloc(11*sizeof(Trans *));
+	trans[1] = (Trans **) emalloc(6*sizeof(Trans *));
 
-	trans[1][8]	= settr(37,0,7,1,0,".(goto)", 0, 2, 0);
-	T = trans[1][7] = settr(36,0,0,0,0,"DO", 0, 2, 0);
-	    T->nxt	= settr(36,0,4,0,0,"DO", 0, 2, 0);
-	T = trans[1][4] = settr(33,0,0,0,0,"IF", 0, 2, 0);
-	T = T->nxt	= settr(33,0,1,0,0,"IF", 0, 2, 0);
-	T = T->nxt	= settr(33,0,2,0,0,"IF", 0, 2, 0);
-	    T->nxt	= settr(33,0,3,0,0,"IF", 0, 2, 0);
-	trans[1][1]	= settr(30,0,6,17,17,"presencia = 1", 1, 2, 0);
-	trans[1][5]	= settr(34,0,6,1,0,".(goto)", 0, 2, 0);
-	trans[1][2]	= settr(31,0,6,18,18,"codigo = 1", 1, 2, 0);
-	trans[1][3]	= settr(32,0,6,1,0,"(1)", 0, 2, 0);
-	trans[1][6]	= settr(35,0,7,19,0,"printf('estado: %e , presencia: %d, codigo: %d, alerta: %d  \\n',state_alarma,presencia,codigo,alerta)", 1, 2, 0);
-	trans[1][9]	= settr(38,0,10,1,0,"break", 0, 2, 0);
-	trans[1][10]	= settr(39,0,0,20,20,"-end-", 0, 3500, 0);
+	T = trans[1][3] = settr(32,0,0,0,0,"IF", 0, 2, 0);
+	T = T->nxt	= settr(32,0,1,0,0,"IF", 0, 2, 0);
+	    T->nxt	= settr(32,0,2,0,0,"IF", 0, 2, 0);
+	trans[1][1]	= settr(30,0,5,25,0,"printf('Luz ON\\n')", 0, 2, 0);
+	trans[1][4]	= settr(33,0,5,1,0,".(goto)", 0, 2, 0);
+	trans[1][2]	= settr(31,0,5,26,0,"printf('Luz OFF\\n')", 0, 2, 0);
+	trans[1][5]	= settr(34,0,0,27,27,"-end-", 0, 3500, 0);
 
 	/* proctype 0: Alarma */
 
 	trans[0] = (Trans **) emalloc(31*sizeof(Trans *));
 
-	trans[0][1]	= settr(0,0,2,21,21,"state_alarma = OFF", 1, 2, 0);
-	trans[0][2]	= settr(1,0,27,22,22,"alerta = 0", 1, 2, 0);
+	trans[0][1]	= settr(0,0,2,28,28,"state_alarma = OFF", 1, 2, 0);
+	trans[0][2]	= settr(1,0,27,29,29,"alerta = 0", 1, 2, 0);
 	trans[0][28]	= settr(27,0,27,1,0,".(goto)", 0, 2, 0);
 	T = trans[0][27] = settr(26,0,0,0,0,"DO", 0, 2, 0);
 	T = T->nxt	= settr(26,0,3,0,0,"DO", 0, 2, 0);
 	    T->nxt	= settr(26,0,19,0,0,"DO", 0, 2, 0);
-	trans[0][3]	= settr(2,0,18,23,0,"((state_alarma==ON))", 1, 2, 0);
+	trans[0][3]	= settr(2,0,18,30,0,"((state_alarma==ON))", 1, 2, 0);
 	T = trans[ 0][18] = settr(17,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(17,2,16,0,0,"ATOMIC", 1, 2, 0);
 	T = trans[0][16] = settr(15,2,0,0,0,"IF", 1, 2, 0);
 	T = T->nxt	= settr(15,2,4,0,0,"IF", 1, 2, 0);
 	T = T->nxt	= settr(15,2,8,0,0,"IF", 1, 2, 0);
 	    T->nxt	= settr(15,2,12,0,0,"IF", 1, 2, 0);
-	trans[0][4]	= settr(3,0,27,24,24,"((presencia&&!(codigo)))", 1, 2, 0); /* m: 5 -> 27,0 */
+	trans[0][4]	= settr(3,0,27,31,31,"((presencia&&!(codigo_ok)))", 1, 2, 0); /* m: 5 -> 27,0 */
 	reached0[5] = 1;
 	trans[0][5]	= settr(0,0,0,0,0,"alerta = 1",0,0,0);
 	trans[0][6]	= settr(0,0,0,0,0,"printf('Sirena activada \\n')",0,0,0);
 	trans[0][7]	= settr(0,0,0,0,0,"presencia = 0",0,0,0);
-	trans[0][17]	= settr(16,0,27,25,25,".(goto)", 1, 2, 0);
-	trans[0][8]	= settr(7,0,27,26,26,"((alerta&&codigo))", 1, 2, 0); /* m: 9 -> 27,0 */
+	trans[0][17]	= settr(16,0,27,32,32,".(goto)", 1, 2, 0);
+	trans[0][8]	= settr(7,0,27,33,33,"((alerta&&codigo_ok))", 1, 2, 0); /* m: 9 -> 27,0 */
 	reached0[9] = 1;
 	trans[0][9]	= settr(0,0,0,0,0,"alerta = 0",0,0,0);
 	trans[0][10]	= settr(0,0,0,0,0,"printf('Sirena desactivada \\n')",0,0,0);
-	trans[0][11]	= settr(0,0,0,0,0,"codigo = 0",0,0,0);
-	trans[0][12]	= settr(11,0,27,27,27,"((!(alerta)&&codigo))", 1, 2, 0); /* m: 13 -> 27,0 */
+	trans[0][11]	= settr(0,0,0,0,0,"codigo_ok = 0",0,0,0);
+	trans[0][12]	= settr(11,0,27,34,34,"((!(alerta)&&codigo_ok))", 1, 2, 0); /* m: 13 -> 27,0 */
 	reached0[13] = 1;
 	trans[0][13]	= settr(0,0,0,0,0,"state_alarma = OFF",0,0,0);
 	trans[0][14]	= settr(0,0,0,0,0,"printf('Alarma apagada \\n')",0,0,0);
-	trans[0][15]	= settr(0,0,0,0,0,"codigo = 0",0,0,0);
-	trans[0][19]	= settr(18,0,26,28,0,"((state_alarma==OFF))", 1, 2, 0);
+	trans[0][15]	= settr(0,0,0,0,0,"codigo_ok = 0",0,0,0);
+	trans[0][19]	= settr(18,0,26,35,0,"((state_alarma==OFF))", 1, 2, 0);
 	T = trans[ 0][26] = settr(25,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(25,2,24,0,0,"ATOMIC", 1, 2, 0);
 	T = trans[0][24] = settr(23,2,0,0,0,"IF", 1, 2, 0);
 	    T->nxt	= settr(23,2,20,0,0,"IF", 1, 2, 0);
-	trans[0][20]	= settr(19,0,27,29,29,"(codigo)", 1, 2, 0); /* m: 21 -> 27,0 */
+	trans[0][20]	= settr(19,0,27,36,36,"(codigo_ok)", 1, 2, 0); /* m: 21 -> 27,0 */
 	reached0[21] = 1;
 	trans[0][21]	= settr(0,0,0,0,0,"state_alarma = ON",0,0,0);
 	trans[0][22]	= settr(0,0,0,0,0,"printf('Alarma encendida \\n')",0,0,0);
-	trans[0][23]	= settr(0,0,0,0,0,"codigo = 0",0,0,0);
+	trans[0][23]	= settr(0,0,0,0,0,"codigo_ok = 0",0,0,0);
 	trans[0][25]	= settr(24,0,27,1,0,".(goto)", 1, 2, 0);
 	trans[0][29]	= settr(28,0,30,1,0,"break", 0, 2, 0);
-	trans[0][30]	= settr(29,0,0,30,30,"-end-", 0, 3500, 0);
+	trans[0][30]	= settr(29,0,0,37,37,"-end-", 0, 3500, 0);
 	/* np_ demon: */
 	trans[_NP_] = (Trans **) emalloc(3*sizeof(Trans *));
 	T = trans[_NP_][0] = settr(9997,0,1,_T5,0,"(np_)", 1,2,0);

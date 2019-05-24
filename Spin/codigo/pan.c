@@ -12741,14 +12741,14 @@ void
 iniglobals(int calling_pid)
 {
 		presencia = 0;
-		boton = 0;
-		now.pulsacion = 0;
+		interruptor = 0;
+		now.boton = 0;
 		now.time_out = 0;
 		now.numero_correcto = 0;
 		now.codigo_ok = 0;
 		now.state = 0;
 #ifdef VAR_RANGES
-		logval("pulsacion", now.pulsacion);
+		logval("boton", now.boton);
 		logval("time_out", now.time_out);
 		logval("numero_correcto", now.numero_correcto);
 		logval("codigo_ok", now.codigo_ok);
@@ -14467,7 +14467,7 @@ c_globals(void)
 	printf("	mtype  DIG2:	2\n");
 	printf("	mtype  DIG3:	1\n");
 	printf("	mtype  state:	%d\n", now.state);
-	printf("	bit    pulsacion:	%d\n", now.pulsacion);
+	printf("	bit    boton:	%d\n", now.boton);
 	printf("	bit    time_out:	%d\n", now.time_out);
 	printf("	bit    numero_correcto:	%d\n", now.numero_correcto);
 	printf("	bit    codigo_ok:	%d\n", now.codigo_ok);

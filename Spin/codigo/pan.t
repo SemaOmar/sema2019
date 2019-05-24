@@ -110,9 +110,9 @@ settable(void)
 	    T->nxt	= settr(91,0,4,0,0,"DO", 0, 2, 0);
 	T = trans[ 4][3] = settr(88,2,0,0,0,"ATOMIC", 1, 2, 0);
 	T->nxt	= settr(88,2,1,0,0,"ATOMIC", 1, 2, 0);
-	trans[4][1]	= settr(86,0,6,11,11,"(!((!(((state==OFF)&&pulsacion))|334)))", 1, 2, 0); /* m: 2 -> 6,0 */
+	trans[4][1]	= settr(86,0,6,11,11,"(!((!(((state==OFF)&&boton))|334)))", 1, 2, 0); /* m: 2 -> 6,0 */
 	reached4[2] = 1;
-	trans[4][2]	= settr(0,0,0,0,0,"assert(!(!((!(((state==OFF)&&pulsacion))|334))))",0,0,0);
+	trans[4][2]	= settr(0,0,0,0,0,"assert(!(!((!(((state==OFF)&&boton))|334))))",0,0,0);
 	trans[4][4]	= settr(89,0,6,1,0,"(1)", 0, 2, 0);
 	trans[4][5]	= settr(90,0,6,1,0,"goto T0_init", 0, 2, 0);
 	trans[4][8]	= settr(93,0,9,1,0,"break", 0, 2, 0);
@@ -135,10 +135,10 @@ settable(void)
 	trans[3][1]	= settr(70,0,2,13,13,"presencia = 1", 1, 2, 0);
 	trans[3][2]	= settr(71,0,13,14,0,"printf('PRESENCIA\\n')", 0, 2, 0);
 	trans[3][12]	= settr(81,0,13,1,0,".(goto)", 0, 2, 0);
-	trans[3][3]	= settr(72,0,4,15,15,"boton = 1", 1, 2, 0);
-	trans[3][4]	= settr(73,0,13,16,0,"printf('BOTON\\n')", 0, 2, 0);
-	trans[3][5]	= settr(74,0,6,17,17,"pulsacion = 1", 1, 2, 0);
-	trans[3][6]	= settr(75,0,13,18,0,"printf('PULSACION\\n')", 0, 2, 0);
+	trans[3][3]	= settr(72,0,4,15,15,"interruptor = 1", 1, 2, 0);
+	trans[3][4]	= settr(73,0,13,16,0,"printf('interruptor\\n')", 0, 2, 0);
+	trans[3][5]	= settr(74,0,6,17,17,"boton = 1", 1, 2, 0);
+	trans[3][6]	= settr(75,0,13,18,0,"printf('boton\\n')", 0, 2, 0);
 	trans[3][7]	= settr(76,0,8,19,19,"time_out = 1", 1, 2, 0);
 	trans[3][8]	= settr(77,0,13,20,0,"printf('time_out\\n')", 0, 2, 0);
 	trans[3][9]	= settr(78,0,10,21,21,"codigo_ok = 1", 1, 2, 0);
@@ -189,10 +189,10 @@ settable(void)
 	T = trans[0][9] = settr(8,2,0,0,0,"IF", 1, 2, 0);
 	T = T->nxt	= settr(8,2,3,0,0,"IF", 1, 2, 0);
 	    T->nxt	= settr(8,2,8,0,0,"IF", 1, 2, 0);
-	trans[0][3]	= settr(2,0,56,33,33,"(pulsacion)", 1, 2, 0); /* m: 4 -> 56,0 */
+	trans[0][3]	= settr(2,0,56,33,33,"(boton)", 1, 2, 0); /* m: 4 -> 56,0 */
 	reached0[4] = 1;
 	trans[0][4]	= settr(0,0,0,0,0,"printf('Introduccion Codigo\\n')",0,0,0);
-	trans[0][5]	= settr(0,0,0,0,0,"pulsacion = 0",0,0,0);
+	trans[0][5]	= settr(0,0,0,0,0,"boton = 0",0,0,0);
 	trans[0][6]	= settr(0,0,0,0,0,"time_out = 0",0,0,0);
 	trans[0][7]	= settr(0,0,0,0,0,"state = DIG1",0,0,0);
 	trans[0][10]	= settr(9,0,56,34,34,".(goto)", 1, 2, 0);
@@ -211,10 +211,10 @@ settable(void)
 	trans[0][15]	= settr(0,0,0,0,0,"time_out = 0",0,0,0);
 	trans[0][16]	= settr(0,0,0,0,0,"state = DIG2",0,0,0);
 	trans[0][22]	= settr(21,0,56,38,38,".(goto)", 1, 2, 0);
-	trans[0][17]	= settr(16,0,56,39,39,"((pulsacion&&!(time_out)))", 1, 2, 0); /* m: 18 -> 56,0 */
+	trans[0][17]	= settr(16,0,56,39,39,"((boton&&!(time_out)))", 1, 2, 0); /* m: 18 -> 56,0 */
 	reached0[18] = 1;
 	trans[0][18]	= settr(0,0,0,0,0,"printf('Digito incrementado\\n')",0,0,0);
-	trans[0][19]	= settr(0,0,0,0,0,"pulsacion = 0",0,0,0);
+	trans[0][19]	= settr(0,0,0,0,0,"boton = 0",0,0,0);
 	trans[0][20]	= settr(19,0,56,40,40,"(1)", 1, 2, 0); /* m: 22 -> 56,0 */
 	reached0[22] = 1;
 	trans[0][24]	= settr(23,0,35,41,0,"((state==DIG2))", 1, 2, 0);
@@ -230,10 +230,10 @@ settable(void)
 	trans[0][27]	= settr(0,0,0,0,0,"time_out = 0",0,0,0);
 	trans[0][28]	= settr(0,0,0,0,0,"state = DIG3",0,0,0);
 	trans[0][34]	= settr(33,0,56,43,43,".(goto)", 1, 2, 0);
-	trans[0][29]	= settr(28,0,56,44,44,"((pulsacion&&!(time_out)))", 1, 2, 0); /* m: 30 -> 56,0 */
+	trans[0][29]	= settr(28,0,56,44,44,"((boton&&!(time_out)))", 1, 2, 0); /* m: 30 -> 56,0 */
 	reached0[30] = 1;
 	trans[0][30]	= settr(0,0,0,0,0,"printf('Digito incrementado\\n')",0,0,0);
-	trans[0][31]	= settr(0,0,0,0,0,"pulsacion = 0",0,0,0);
+	trans[0][31]	= settr(0,0,0,0,0,"boton = 0",0,0,0);
 	trans[0][32]	= settr(31,0,56,45,45,"(1)", 1, 2, 0); /* m: 34 -> 56,0 */
 	reached0[34] = 1;
 	trans[0][36]	= settr(35,0,55,46,0,"((state==DIG3))", 1, 2, 0);
@@ -259,10 +259,10 @@ settable(void)
 	trans[0][46]	= settr(0,0,0,0,0,"numero_correcto = 0",0,0,0);
 	trans[0][47]	= settr(0,0,0,0,0,"codigo_ok = 0",0,0,0);
 	trans[0][48]	= settr(0,0,0,0,0,"state = OFF",0,0,0);
-	trans[0][49]	= settr(48,0,56,50,50,"((pulsacion&&!(time_out)))", 1, 2, 0); /* m: 50 -> 56,0 */
+	trans[0][49]	= settr(48,0,56,50,50,"((boton&&!(time_out)))", 1, 2, 0); /* m: 50 -> 56,0 */
 	reached0[50] = 1;
 	trans[0][50]	= settr(0,0,0,0,0,"printf('Digito incrementado\\n')",0,0,0);
-	trans[0][51]	= settr(0,0,0,0,0,"pulsacion = 0",0,0,0);
+	trans[0][51]	= settr(0,0,0,0,0,"boton = 0",0,0,0);
 	trans[0][52]	= settr(51,0,56,51,51,"(1)", 1, 2, 0); /* m: 54 -> 56,0 */
 	reached0[54] = 1;
 	trans[0][58]	= settr(57,0,59,1,0,"break", 0, 2, 0);
