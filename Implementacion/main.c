@@ -21,12 +21,68 @@
 
 enum light_state { LIGHT_ON, LIGHT_OFF};
 enum alarm_state { ALARM_ON, ALARM_OFF};
+enum code_state { CODE_OFF, DIG1, DIG2, DIG3};
 
 static int flags = 0;
+
 static int button_pressed (fsm_t* this) { return button; }
 
 static struct timeval timer_endtime;
 
+
+/******************* FUNCIONES DE GUARDA *******************/
+static int interruptor_presionado (fsm_t* this) {
+	int estado = OFF;
+	if( (flag & ~INTERRUPTOR) == INTERRUPTOR ){estado = ON;}
+	return estado;
+}
+
+static int presencia_detectada (fsm_t* this) {
+	int estado = NO;
+	if( (flag & ~PRESENCIA_LUZ) == PRESENCIA_LUZ ){estado = SI;}
+	return estado;
+}
+/*
+OJO!!! Presencia debe tener dos flags, uno para las luces y otro para alarma
+Si comparten el mismo flag y uno lo borra, el otro nunca llega a analizar el flag
+*/
+static int intruso (fsm_t* this) {
+	int estado = NO;
+	if ( ((flag & ~PRESENCIA_ALARMA) == PRESENCIA_ALARMA ) && ((flag & ~CODIGO_OK) == CODIGO_OK ) ){
+		sirena = ON;
+		estado = SI;
+	}
+	return estado;
+}
+
+static int no_intruso (fsm_t* this) {
+	int estado = NO;
+	if ( ((flag & ~PRESENCIA_ALARMA) == PRESENCIA_ALARMA ) && ((flag & ~CODIGO_OK) != CODIGO_OK ) ){
+		sirena = OFF;
+		estado = SI;
+	}
+	return estado;
+}
+
+static int desactivar (fsm_t* this) {
+	int estado = NO;
+	if ( ( sirena == OFF ) && ((flag & ~CODIGO_OK) == CODIGO_OK ) ){estado = SI;}
+	return estado;
+}
+
+static int activar (fsm_t* this) {
+	int estado = NO;
+	if ( (flag & ~CODIGO_OK) == CODIGO_OK ){estado = SI;}
+	return estado;
+}
+
+static int boton_presionado (fsm_t* this) {
+	int estado = NO;
+	if ( (flag & ~BOTON) == BOTON ){estado = SI;}
+	return estado;
+}
+
+/******************* FUNCIONES DE SALIDA *******************/
 static void encender_luz (fsm_t* this)
 {
   printf("Luz encendida");
@@ -34,34 +90,35 @@ static void encender_luz (fsm_t* this)
   flags &= PRESENCIA_CLEAN;  
 }
 
-static void coffee (fsm_t* this)
-{
-  digitalWrite (GPIO_CUP, LOW);
-  digitalWrite (GPIO_COFFEE, HIGH);
-  timer_start (COFFEE_TIME);
-}
+/******************* FSMs *******************/
+// FSM Luces
+static fsm_trans_t luces[] = {
+  { LIGHT_OFF, interruptor_presionado, LIGHT_ON, encender_luz},
+  { LIGHT_OFF, presencia_detectada, LIGHT_ON, encender_luz},
+  { LIGHT_ON, interruptor_presionado, LIGHT_OFF, apagar_luz},
+  { LIGHT_ON, presencia_detectada, LIGHT_OFF, encender_luz},
+  { LIGHT_ON, timer_finished, LIGHT_OFF, apagar_luz},
+  {-1, NULL, -1, NULL },
+};
 
-static void milk (fsm_t* this)
-{
-  digitalWrite (GPIO_COFFEE, LOW);
-  digitalWrite (GPIO_MILK, HIGH);
-  timer_start (MILK_TIME);
-}
+// FSM Alarma
+static fsm_trans_t alarma[] = {
+  { ALARM_ON, intruso, ALARM_ON, activar_sirena}, //Se ha detectado presencia y no se ha introducido codigo valido
+  { ALARM_ON, no_intruso, ALARM_ON, desactivar_sirena}, //Se ha detectado presencia pero se ha introducido el codigo correcto
+  { ALARM_ON, desactivar, ALARM_OFF, apagar_alarma}, //La alarma esta encendida, la sirena no esta sonando y se ha introducido codigo correcto
+  { ALARM_OFF, activar, ALARM_OFF, encender_alarma}, //Alarma apagada y se ha introducido codigo correcto
+  {-1, NULL, -1, NULL },
+};
 
-static void finish (fsm_t* this)
-{
-  digitalWrite (GPIO_MILK, LOW);
-  digitalWrite (GPIO_LED, HIGH);
-}
-
-/*
- * Explicit FSM description
- */
-static fsm_trans_t cofm[] = {
-  { COFM_WAITING, button_pressed, COFM_CUP,     cup    },
-  { COFM_CUP,     timer_finished, COFM_COFFEE,  coffee },
-  { COFM_COFFEE,  timer_finished, COFM_MILK,    milk   },
-  { COFM_MILK,    timer_finished, COFM_WAITING, finish },
+// FSM Codigo
+static fsm_trans_t codigo[] = {
+  { CODE_OFF, boton_presionado, DIG1, inicializar}, //inicializamos digito y temporizador
+  { DIG1, boton_presionado, DIG1, incrementar_digito },//Incrementamos numero y reiniciamos temporizador
+  { DIG1, timer_finished, DIG2, actulizar_numero },
+  { DIG2, boton_presionado, DIG2, incrementar_digito },
+  { DIG2, timer_finished, DIG3, actulizar_numero },
+  { DIG3, boton_presionado, DIG3, incrementar_digito },
+  { DIG3, timer_finished, CODE_OFF, verificar_codigo },//Al terminar de introducir el ultimo digito, verificamos si es correcto
   {-1, NULL, -1, NULL },
 };
 
@@ -107,13 +164,42 @@ void delay_until (struct timeval* next_activation)
   select (0, NULL, NULL, NULL, &timeout);
 }
 
-
+void *teclado(void *arg) 
+{
+	char tecla;
+	
+	printf("Presiona una tecla para simular una accion\n");
+	printf("\t p=sensor presencia\n");
+	printf("\t b=boton luz\n");
+	printf("\t t=timeout_codigo\n");
+	printf("\t a=timeout_luces\n");
+	printf("\t c=pulsacion corta\n");
+	printf("\t l=pulsacion larga\n");
+	
+	while (1){
+		
+		scanf("%c", &tecla);
+		
+		switch(tecla){
+			case 'p':
+				printf ("Tecla presencia\n"); 
+				flag = PRESENCIA_LUZ | PRESENCIA_ALARMA;
+			break;
+		}
+	}
+}
 
 int main ()
 {
   struct timeval clk_period = { 0, 250 * 1000 };
   struct timeval next_activation;
-  fsm_t* cofm_fsm = fsm_new (cofm);
+  
+  pthread_t hilo_id;
+  pthread_create(&hilo_id, NULL, teclado, NULL); //creacion de un hilo que maneje las entradas del sistema, simuladas con teclas
+  
+  fsm_t* luces_fsm = fsm_new (luces);
+  fsm_t* alarma_fsm = fsm_new (alarma);
+  fsm_t* codigo_fsm = fsm_new (codigo);
   
   gettimeofday (&next_activation, NULL);
   while (scanf("%d %d", &button, &timer) == 2) {
