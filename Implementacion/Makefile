@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall -g -lpthread
+CFLAGS=-Wall -g
 
 all:	main.c
-		$(CC) $(CFLAGS) -o main main.c
+		$(CC) $(CFLAGS) -o main main.c fsm.c -lpthread
 
 
