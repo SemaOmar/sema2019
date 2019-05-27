@@ -101,6 +101,7 @@ static void apagar_luz (fsm_t* this)
 {
   printf("Luz apagada\n");
   flag &= INTERRUPTOR_CLEAN;
+  flag &= PRESENCIA_LUZ_CLEAN;
   flag &=TIMER_PRESENCIA_CLEAN;
   
 }
@@ -109,6 +110,7 @@ static void encender_alarma (fsm_t* this)
 {
   printf("Alarma encendida\n");
   flag &= CODIGO_OK_CLEAN;
+  flag &= PRESENCIA_ALARMA_CLEAN;
 }
 
 static void activar_sirena (fsm_t* this)
@@ -170,6 +172,7 @@ static void verificar_codigo (fsm_t* this)
 	  printf("Codigo erroneo\n");
 	  flag &= CODIGO_OK_CLEAN;
   }
+  flag &= TIMER_CODIGO_CLEAN;
 }
 
 /******************* FSMs *******************/
@@ -262,36 +265,35 @@ void *teclado(void *arg)
 		switch(tecla){
 			case 'p':
 				printf ("Tecla presencia\n"); 
-				flag = PRESENCIA_LUZ | PRESENCIA_ALARMA;
+				flag |= PRESENCIA_LUZ | PRESENCIA_ALARMA;
 			break;
 			case 'i':
 				printf ("Tecla interruptor\n"); 
-				flag = INTERRUPTOR;
+				flag |= INTERRUPTOR;
 			break;
 			case 'b':
 				printf ("Tecla boton\n"); 
-				flag = BOTON;
+				flag |= BOTON;
 			break;
 			case 't':
 				printf ("Tecla timer presencia\n"); 
-				flag = TIMER_PRESENCIA;
+				flag |= TIMER_PRESENCIA;
 			break;
 			case 'y':
 				printf ("Tecla timer codigo\n"); 
-				flag = TIMER_CODIGO;
+				flag |= TIMER_CODIGO;
 			break;
 			case 'q':
 				printf ("Saliendo del programa...\n"); 
 				salir = 0;
 			break;
 		}
-			printf("%02x \n",flag);
 	}
 }
 
 int main (void)
 {
-  struct timeval clk_period = { 0, 1000 * 1000 };
+  struct timeval clk_period = { 0, 250 * 1000 };
   struct timeval next_activation;
   
   pthread_t hilo_id;
