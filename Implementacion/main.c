@@ -18,12 +18,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include "main.h"
+#include "fsm.h"
 
 static int flag = 0;
 
-//static int button_pressed (fsm_t* this) { return button; }
-
-int codigo = 100;
+int codigo_secreto = 100;
 int numero = 0;
 int digito = 1;
 char salir = 1;
@@ -95,14 +94,14 @@ static void encender_luz (fsm_t* this)
 {
   printf("Luz encendida\n");
   flag &= INTERRUPTOR_CLEAN;
-  flag &= PRESENCIA_CLEAN;
+  flag &= PRESENCIA_LUZ_CLEAN;
 }
 
 static void apagar_luz (fsm_t* this)
 {
   printf("Luz apagada\n");
   flag &= INTERRUPTOR_CLEAN;
-  flag &=TIMER_PRESENCIA
+  flag &=TIMER_PRESENCIA;
 }
 
 static void encender_alarma (fsm_t* this)
@@ -157,7 +156,7 @@ static void actulizar_numero (fsm_t* this)
 static void verificar_codigo (fsm_t* this)
 {
   numero = numero*10 + digito;
-  if (numero == codigo){
+  if (numero == codigo_secreto){
 	  printf("Codigo correcto\n");
 	  flag |= CODIGO_OK;
   }else {
@@ -281,7 +280,7 @@ void *teclado(void *arg)
 	}
 }
 
-int main (salir)
+int main (void)
 {
   struct timeval clk_period = { 0, 250 * 1000 };
   struct timeval next_activation;
@@ -294,9 +293,14 @@ int main (salir)
   fsm_t* codigo_fsm = fsm_new (codigo);
   
   gettimeofday (&next_activation, NULL);
-  while (flag != SALIR) {
-    fsm_fire (cofm_fsm);
+  while (salir) {
+    fsm_fire (luces_fsm);
+	fsm_fire (alarma_fsm);
+	fsm_fire (codigo_fsm);
     timeval_add (&next_activation, &next_activation, &clk_period);
     delay_until (&next_activation);
   }
+  
+  return 0;
 }
+

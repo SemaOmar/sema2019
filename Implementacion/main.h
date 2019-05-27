@@ -8,7 +8,8 @@
 #include <sys/time.h>
 #include <time.h>
 #include <signal.h>
-#include "fsm.h"
+#include <pthread.h>
+
 
 void timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b);
 void timeval_add (struct timeval *res, struct timeval *a, struct timeval *b);
@@ -24,6 +25,7 @@ int timeval_less (struct timeval *a, struct timeval *b);
 #define SIRENA 0x10
 #define TIMER_PRESENCIA 0x20
 #define TIMER_CODIGO 0x40
+#define BOTON 0x80
 
 #define INTERRUPTOR_CLEAN	0xFE
 #define PRESENCIA_LUZ_CLEAN	0xFD
@@ -32,6 +34,7 @@ int timeval_less (struct timeval *a, struct timeval *b);
 #define SIRENA_CLEAN 0xEF
 #define TIMER_PRESENCIA_CLEAN 0xDF
 #define TIMER_CODIGO_CLEAN 0xBF
+#define BOTON_CLEAN 0x7F
 
 enum light_state { LIGHT_ON, LIGHT_OFF};
 enum alarm_state { ALARM_ON, ALARM_OFF};
