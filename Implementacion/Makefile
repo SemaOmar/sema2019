@@ -1,16 +1,13 @@
 CC=gcc
 CFLAGS=-g -Wall -ansi -O -I. -DNDEBUG
 LDFLAGS=-L.
-LDLIBS=-lwiringPi
+#LDLIBS=-lwiringPi
 
-all: libwiringPi.a main interruptor
+all: main interruptor
 
 main: main.o fsm.o
-interruptor: interruptor.o fsm.o
 
 clean:
-	$(RM) *.o *~ main interruptor libwiringPi.a
+	$(RM) *.o *~ main
 
-libwiringPi.a: wiringPi.o
-	ar rcs $@ $^
 
