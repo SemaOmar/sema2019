@@ -22,7 +22,7 @@
 
 static int flag = 0;
 
-int codigo_secreto = 100;
+int codigo_secreto = 111;
 int numero = 0;
 int digito = 1;
 char salir = 1;
@@ -55,7 +55,7 @@ static int activar (fsm_t* this) {
 
 static int intruso (fsm_t* this) {
 	int aux = FALSE;
-	if ( ((flag & PRESENCIA_ALARMA) == PRESENCIA_ALARMA ) && ((flag & CODIGO_OK) == CODIGO_OK ) ){
+	if ( ((flag & PRESENCIA_ALARMA) == PRESENCIA_ALARMA ) ){
 		//sirena = TRUE;
 		aux = TRUE;
 	}
@@ -73,7 +73,7 @@ static int cod_correcto (fsm_t* this) {
 
 static int desactivar (fsm_t* this) {
 	int aux = FALSE;
-	if ( !((flag & SIRENA) == SIRENA ) && ((flag & CODIGO_OK) == CODIGO_OK ) ){aux = TRUE;}
+	if ( ((flag & SIRENA) != SIRENA ) && ((flag & CODIGO_OK) == CODIGO_OK ) ){aux = TRUE;}
 	return aux;
 }
 
@@ -101,7 +101,8 @@ static void apagar_luz (fsm_t* this)
 {
   printf("Luz apagada\n");
   flag &= INTERRUPTOR_CLEAN;
-  flag &=TIMER_PRESENCIA;
+  flag &=TIMER_PRESENCIA_CLEAN;
+  
 }
 
 static void encender_alarma (fsm_t* this)
@@ -113,13 +114,15 @@ static void encender_alarma (fsm_t* this)
 static void activar_sirena (fsm_t* this)
 {
   printf("Sirena sonando\n");
-  flag &= CODIGO_OK_CLEAN;
+  flag |=  SIRENA;
+  //flag &= CODIGO_OK_CLEAN;
   flag &= PRESENCIA_ALARMA_CLEAN;
 }
 
 static void desactivar_sirena (fsm_t* this)
 {
   printf("Sirena apagada\n");
+  flag &=  SIRENA_CLEAN;
   flag &= CODIGO_OK_CLEAN;
   flag &= PRESENCIA_ALARMA_CLEAN;
 }
@@ -132,7 +135,7 @@ static void apagar_alarma (fsm_t* this)
 
 static void inicializar (fsm_t* this)
 {
-  printf("Introduciendo codigo...\n");
+  printf("Introduciendo codigo... 1 \n");
   flag &= CODIGO_OK_CLEAN;
   flag &= BOTON_CLEAN;
   numero = 0;
@@ -141,15 +144,19 @@ static void inicializar (fsm_t* this)
 
 static void incrementar_digito (fsm_t* this)
 {
-  digito ++;
+  if (digito < 9) {	
+	digito ++;
+  } else
+	 digito = 0;
   printf("Introduciendo digito: %d\n", digito);
   flag &= BOTON_CLEAN;
 }
 
-static void actulizar_numero (fsm_t* this)
+static void actualizar_numero (fsm_t* this)
 {
   numero = numero*10 + digito;
-  printf("Digito introducido\n");
+  digito = 1;
+  printf("Digito introducido %d \n",numero);
   flag &= TIMER_CODIGO_CLEAN;
 }
 
@@ -188,9 +195,9 @@ static fsm_trans_t alarma[] = {
 static fsm_trans_t codigo[] = {
   { CODE_OFF, boton_presionado, DIG1, inicializar}, //inicializamos digito y temporizador
   { DIG1, boton_presionado, DIG1, incrementar_digito },//Incrementamos numero y reiniciamos temporizador
-  { DIG1, timer_codigo_finished, DIG2, actulizar_numero },
+  { DIG1, timer_codigo_finished, DIG2, actualizar_numero },
   { DIG2, boton_presionado, DIG2, incrementar_digito },
-  { DIG2, timer_codigo_finished, DIG3, actulizar_numero },
+  { DIG2, timer_codigo_finished, DIG3, actualizar_numero },
   { DIG3, boton_presionado, DIG3, incrementar_digito },
   { DIG3, timer_codigo_finished, CODE_OFF, verificar_codigo },//Al terminar de introducir el ultimo digito, verificamos si es correcto
   {-1, NULL, -1, NULL },
@@ -240,12 +247,13 @@ void *teclado(void *arg)
 	char tecla;
 	
 	printf("Presiona una tecla para simular una accion\n");
-	printf("\t p=sensor presencia\n");
-	printf("\t b=boton luz\n");
-	printf("\t t=timeout_codigo\n");
-	printf("\t a=timeout_luces\n");
-	printf("\t c=pulsacion corta\n");
-	printf("\t l=pulsacion larga\n");
+	printf("\t p = sensor presencia\n");
+	printf("\t i = interruptor\n");
+	printf("\t b = boton luz\n");
+	printf("\t t = timeout_presencia\n");
+	printf("\t y = timeout_codigo \n");
+	printf("\t q = salir \n");
+
 	
 	while (1){
 		
@@ -277,12 +285,13 @@ void *teclado(void *arg)
 				salir = 0;
 			break;
 		}
+			printf("%02x \n",flag);
 	}
 }
 
 int main (void)
 {
-  struct timeval clk_period = { 0, 250 * 1000 };
+  struct timeval clk_period = { 0, 1000 * 1000 };
   struct timeval next_activation;
   
   pthread_t hilo_id;
