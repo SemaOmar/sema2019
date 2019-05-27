@@ -14,13 +14,28 @@ void timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b);
 void timeval_add (struct timeval *res, struct timeval *a, struct timeval *b);
 int timeval_less (struct timeval *a, struct timeval *b);
 
-#define PULSADOR_CLEAN	0xFE
-#define PULSADOR_ON	0x01
-#define PRESENCIA_CLEAN	0xFD
-#define PULSADOR_ON	0x02
+#define TRUE 1
+#define FALSE 0
+
+#define INTERRUPTOR	0x01
+#define PRESENCIA_LUZ	0x02
+#define PRESENCIA_ALARMA	0x04
+#define CODIGO_OK 0x08
+#define SIRENA 0x10
+#define TIMER_PRESENCIA 0x20
+#define TIMER_CODIGO 0x40
+
+#define INTERRUPTOR_CLEAN	0xFE
+#define PRESENCIA_LUZ_CLEAN	0xFD
+#define PRESENCIA_ALARMA_CLEAN	0xFB
+#define CODIGO_OK_CLEAN 0xF7
+#define SIRENA_CLEAN 0xEF
+#define TIMER_PRESENCIA_CLEAN 0xDF
+#define TIMER_CODIGO_CLEAN 0xBF
+
+enum light_state { LIGHT_ON, LIGHT_OFF};
+enum alarm_state { ALARM_ON, ALARM_OFF};
+enum code_state { CODE_OFF, DIG1, DIG2, DIG3};
 
 
-#define CUP_TIME	250
-#define COFFEE_TIME	3000
-#define MILK_TIME	3000
 #endif

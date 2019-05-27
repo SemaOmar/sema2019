@@ -19,75 +19,147 @@
 
 #include "main.h"
 
-enum light_state { LIGHT_ON, LIGHT_OFF};
-enum alarm_state { ALARM_ON, ALARM_OFF};
-enum code_state { CODE_OFF, DIG1, DIG2, DIG3};
-
 static int flags = 0;
 
-static int button_pressed (fsm_t* this) { return button; }
+//static int button_pressed (fsm_t* this) { return button; }
 
-static struct timeval timer_endtime;
+int codigo = 100;
+int numero = 0;
+int digito = 1;
 
 
 /******************* FUNCIONES DE GUARDA *******************/
 static int interruptor_presionado (fsm_t* this) {
-	int estado = OFF;
-	if( (flag & ~INTERRUPTOR) == INTERRUPTOR ){estado = ON;}
-	return estado;
+	int aux = FALSE;
+	if( (flag & INTERRUPTOR) == INTERRUPTOR ){aux = TRUE;}
+	return aux;
 }
 
 static int presencia_detectada (fsm_t* this) {
-	int estado = NO;
-	if( (flag & ~PRESENCIA_LUZ) == PRESENCIA_LUZ ){estado = SI;}
-	return estado;
-}
-/*
-OJO!!! Presencia debe tener dos flags, uno para las luces y otro para alarma
-Si comparten el mismo flag y uno lo borra, el otro nunca llega a analizar el flag
-*/
-static int intruso (fsm_t* this) {
-	int estado = NO;
-	if ( ((flag & ~PRESENCIA_ALARMA) == PRESENCIA_ALARMA ) && ((flag & ~CODIGO_OK) == CODIGO_OK ) ){
-		sirena = ON;
-		estado = SI;
-	}
-	return estado;
+	int aux = FALSE;
+	if( (flag & PRESENCIA_LUZ) == PRESENCIA_LUZ){aux = TRUE;}
+	return aux;
 }
 
-static int no_intruso (fsm_t* this) {
-	int estado = NO;
-	if ( ((flag & ~PRESENCIA_ALARMA) == PRESENCIA_ALARMA ) && ((flag & ~CODIGO_OK) != CODIGO_OK ) ){
-		sirena = OFF;
-		estado = SI;
-	}
-	return estado;
-}
-
-static int desactivar (fsm_t* this) {
-	int estado = NO;
-	if ( ( sirena == OFF ) && ((flag & ~CODIGO_OK) == CODIGO_OK ) ){estado = SI;}
-	return estado;
+static int timer_presencia_finished (fsm_t* this) {
+	int aux = FALSE;
+	if ( (flag & TIMER_PRESENCIA) == TIMER_PRESENCIA ){aux = TRUE;}
+	return aux;
 }
 
 static int activar (fsm_t* this) {
-	int estado = NO;
-	if ( (flag & ~CODIGO_OK) == CODIGO_OK ){estado = SI;}
-	return estado;
+	int aux = FALSE;
+	if ( (flag & CODIGO_OK) == CODIGO_OK ){aux = TRUE;}
+	return aux;
+}
+
+static int intruso (fsm_t* this) {
+	int aux = FALSE;
+	if ( ((flag & PRESENCIA_ALARMA) == PRESENCIA_ALARMA ) && ((flag & CODIGO_OK) == CODIGO_OK ) ){
+		//sirena = TRUE;
+		aux = TRUE;
+	}
+	return aux;
+}
+
+static int cod_correcto (fsm_t* this) {
+	int aux = FALSE;
+	if ( ((flag & SIRENA) == SIRENA ) && ((flag & CODIGO_OK) == CODIGO_OK ) ){
+		//sirena = TRUE;
+		aux = TRUE;
+	}
+	return aux;
+}
+
+static int desactivar (fsm_t* this) {
+	int aux = FALSE;
+	if ( !((flag & SIRENA) == SIRENA ) && ((flag & CODIGO_OK) == CODIGO_OK ) ){aux = TRUE;}
+	return aux;
 }
 
 static int boton_presionado (fsm_t* this) {
-	int estado = NO;
-	if ( (flag & ~BOTON) == BOTON ){estado = SI;}
-	return estado;
+	int aux = FALSE;
+	if ( (flag & BOTON) == BOTON ){aux = TRUE;}
+	return aux;
+}
+
+static int timer_codigo_finished (fsm_t* this) {
+	int aux = FALSE;
+	if ( (flag & TIMER_CODIGO) == TIMER_CODIGO ){aux = TRUE;}
+	return aux;
 }
 
 /******************* FUNCIONES DE SALIDA *******************/
 static void encender_luz (fsm_t* this)
 {
-  printf("Luz encendida");
-  flags &= PULSADOR_CLEAN;
-  flags &= PRESENCIA_CLEAN;  
+  printf("Luz encendida\n");
+  flags &= INTERRUPTOR_CLEAN;
+  flags &= PRESENCIA_CLEAN;
+}
+
+static void apagar_luz (fsm_t* this)
+{
+  printf("Luz apagada\n");
+  flags &= INTERRUPTOR_CLEAN;
+  flags &=TIMER_PRESENCIA
+}
+
+static void encender_alarma (fsm_t* this)
+{
+  printf("Alarma encendida\n");
+  flags &= CODIGO_OK_CLEAN;
+}
+
+static void activar_sirena (fsm_t* this)
+{
+  printf("Sirena sonando\n");
+  flags &= CODIGO_OK_CLEAN;
+  flags &= PRESENCIA_ALARMA_CLEAN;
+}
+
+static void desactivar_sirena (fsm_t* this)
+{
+  printf("Sirena apagada\n");
+  flags &= CODIGO_OK_CLEAN;
+  flags &= PRESENCIA_ALARMA_CLEAN;
+}
+
+static void apagar_alarma (fsm_t* this)
+{
+  printf("Alarma apagada\n");
+  flags &= CODIGO_OK_CLEAN;
+}
+
+static void inicializar (fsm_t* this)
+{
+  printf("Introduciendo codigo...\n");
+  flags &= CODIGO_OK_CLEAN;
+  numero = 0;
+  digito = 1;
+}
+
+static void incrementar_digito (fsm_t* this)
+{
+  digito ++;
+  printf("Introduciendo digito: %d\n", digito);
+}
+
+static void actulizar_numero (fsm_t* this)
+{
+  numero = numero*10 + digito;
+  printf("Digito introducido\n");
+}
+
+static void verificar_codigo (fsm_t* this)
+{
+  numero = numero*10 + digito;
+  if (numero == codigo){
+	  printf("Codigo correcto\n");
+	  flags |= CODIGO_OK;
+  }else {
+	  printf("Codigo erroneo\n");
+	  flags &= CODIGO_OK_CLEAN;
+  }
 }
 
 /******************* FSMs *******************/
@@ -96,17 +168,16 @@ static fsm_trans_t luces[] = {
   { LIGHT_OFF, interruptor_presionado, LIGHT_ON, encender_luz},
   { LIGHT_OFF, presencia_detectada, LIGHT_ON, encender_luz},
   { LIGHT_ON, interruptor_presionado, LIGHT_OFF, apagar_luz},
-  { LIGHT_ON, presencia_detectada, LIGHT_OFF, encender_luz},
-  { LIGHT_ON, timer_finished, LIGHT_OFF, apagar_luz},
+  { LIGHT_ON, timer_presencia_finished, LIGHT_OFF, apagar_luz},
   {-1, NULL, -1, NULL },
 };
 
 // FSM Alarma
 static fsm_trans_t alarma[] = {
+  { ALARM_OFF, activar, ALARM_ON, encender_alarma},//Alarma apagada y se ha introducido codigo correcto
   { ALARM_ON, intruso, ALARM_ON, activar_sirena}, //Se ha detectado presencia y no se ha introducido codigo valido
-  { ALARM_ON, no_intruso, ALARM_ON, desactivar_sirena}, //Se ha detectado presencia pero se ha introducido el codigo correcto
-  { ALARM_ON, desactivar, ALARM_OFF, apagar_alarma}, //La alarma esta encendida, la sirena no esta sonando y se ha introducido codigo correcto
-  { ALARM_OFF, activar, ALARM_OFF, encender_alarma}, //Alarma apagada y se ha introducido codigo correcto
+  { ALARM_ON, cod_correcto, ALARM_ON, desactivar_sirena}, //Se ha detectado presencia pero se ha introducido el codigo correcto
+  { ALARM_ON, desactivar, ALARM_OFF, apagar_alarma},//La alarma esta encendida, la sirena no esta sonando y se ha introducido codigo correcto
   {-1, NULL, -1, NULL },
 };
 
@@ -114,11 +185,11 @@ static fsm_trans_t alarma[] = {
 static fsm_trans_t codigo[] = {
   { CODE_OFF, boton_presionado, DIG1, inicializar}, //inicializamos digito y temporizador
   { DIG1, boton_presionado, DIG1, incrementar_digito },//Incrementamos numero y reiniciamos temporizador
-  { DIG1, timer_finished, DIG2, actulizar_numero },
+  { DIG1, timer_codigo_finished, DIG2, actulizar_numero },
   { DIG2, boton_presionado, DIG2, incrementar_digito },
-  { DIG2, timer_finished, DIG3, actulizar_numero },
+  { DIG2, timer_codigo_finished, DIG3, actulizar_numero },
   { DIG3, boton_presionado, DIG3, incrementar_digito },
-  { DIG3, timer_finished, CODE_OFF, verificar_codigo },//Al terminar de introducir el ultimo digito, verificamos si es correcto
+  { DIG3, timer_codigo_finished, CODE_OFF, verificar_codigo },//Al terminar de introducir el ultimo digito, verificamos si es correcto
   {-1, NULL, -1, NULL },
 };
 
@@ -127,8 +198,7 @@ static fsm_trans_t codigo[] = {
  */
 
 /* res = a - b */
-void
-timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b)
+void timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b)
 {
   res->tv_sec = a->tv_sec - b->tv_sec;
   res->tv_usec = a->tv_usec - b->tv_usec;
@@ -139,8 +209,7 @@ timeval_sub (struct timeval *res, struct timeval *a, struct timeval *b)
 }
 
 /* res = a + b */
-void
-timeval_add (struct timeval *res, struct timeval *a, struct timeval *b)
+void timeval_add (struct timeval *res, struct timeval *a, struct timeval *b)
 {
   res->tv_sec = a->tv_sec + b->tv_sec
     + a->tv_usec / 1000000 + b->tv_usec / 1000000; 
@@ -148,8 +217,7 @@ timeval_add (struct timeval *res, struct timeval *a, struct timeval *b)
 }
 
 /* a < b */
-int
-timeval_less (struct timeval *a, struct timeval *b)
+int timeval_less (struct timeval *a, struct timeval *b)
 {
   return (a->tv_sec < b->tv_sec) ||
     ((a->tv_sec == b->tv_sec) && (a->tv_usec < b->tv_usec));
@@ -183,6 +251,22 @@ void *teclado(void *arg)
 		switch(tecla){
 			case 'p':
 				printf ("Tecla presencia\n"); 
+				flag = PRESENCIA_LUZ | PRESENCIA_ALARMA;
+			break;
+			case 'i':
+				printf ("Tecla interruptor\n"); 
+				flag = PRESENCIA_LUZ | PRESENCIA_ALARMA;
+			break;
+			case 'b':
+				printf ("Tecla boton\n"); 
+				flag = PRESENCIA_LUZ | PRESENCIA_ALARMA;
+			break;
+			case 't':
+				printf ("Tecla timer presencia\n"); 
+				flag = PRESENCIA_LUZ | PRESENCIA_ALARMA;
+			break;
+			case 'y':
+				printf ("Tecla timer codigo\n"); 
 				flag = PRESENCIA_LUZ | PRESENCIA_ALARMA;
 			break;
 		}
